@@ -1,3 +1,6 @@
 .DS_Store
 Thumbs.db
 *.log
+
+# Never commit real payment gateway credentials
+chip-config.php

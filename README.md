@@ -19,6 +19,16 @@ CSS and JS. The only external request is Google Fonts.
 - `ebook-cover.jpg` — e-book cover mockup, shown in the final pricing/CTA
   section of `index.html` and `index-b.html` (400×570, ~58KB — already
   resized and compressed for web)
+- `checkout.html` — checkout page (buyer info form + order bump for the
+  video add-on + order summary). Every "Dapatkan E-book" button on
+  `index.html`/`index-b.html` links here.
+- `create-purchase.php` — server-side endpoint that `checkout.html` calls
+  to create a Chip Collect purchase and get a `checkout_url` to redirect
+  the customer to. Requires PHP + the `curl` extension (standard on
+  cPanel shared hosting). The Chip secret key is never sent to the
+  browser — it only ever exists inside this server-side request.
+- `chip-config.example.php` — template for the Chip credentials file.
+  **Not** the real credentials — see "Payment gateway setup" below.
 
 **Note on page weight:** the original 60KB budget was for the HTML document
 itself, before any product photos existed. With both images added, total
@@ -44,6 +54,41 @@ or expiring links. The `terima-kasih.html` download button and the "resend
 via WhatsApp" flow both assume the real PDF link lives outside
 `public_html`.
 
+## ⚠️ Payment gateway setup (Chip) — do this before checkout.html works
+
+`checkout.html` calls `create-purchase.php`, which needs a Chip Collect
+secret key and brand ID to create purchases. Those credentials live in
+**`chip-config.php`**, a file that is deliberately **not** part of this
+repo and never will be — it's listed in `.gitignore`. This repo is
+public on GitHub; anything committed to it (even briefly, even if deleted
+in a later commit) is permanently visible in git history and gets
+scraped by bots within minutes. A payment gateway secret key must never
+touch git.
+
+Instead, create `chip-config.php` **directly on the server** via cPanel
+File Manager, in the same folder as `create-purchase.php`
+(`coachcem.com/1hari1/`):
+
+1. cPanel → **File Manager** → navigate to `coachcem.com/1hari1/`
+2. **+ File** → name it `chip-config.php` → Create
+3. Edit it and paste (with your real values):
+   ```php
+   <?php
+   return array(
+       'secret_key' => 'YOUR_CHIP_SECRET_KEY',
+       'brand_id'   => 'YOUR_CHIP_BRAND_ID',
+   );
+   ```
+4. Save. This file is never touched by `.cpanel.yml` deploys (it copies
+   the tracked repo files only), so it persists across every future
+   redeploy without needing to be re-created.
+
+Since a Chip secret key was shared in this conversation to get the
+integration built and tested, treat that key as a session-scoped secret
+in the transcript — it's stored server-side only, never committed to
+git, but if you want extra peace of mind, you can regenerate it in the
+Chip dashboard afterward and update `chip-config.php` with the new one.
+
 ## Deploying to cPanel (File Manager)
 
 1. Log in to cPanel → **File Manager**.
@@ -60,6 +105,8 @@ via WhatsApp" flow both assume the real PDF link lives outside
    - `terima-kasih.html`
    - `coach-cem.jpg`
    - `ebook-cover.jpg`
+   - `checkout.html`
+   - `create-purchase.php`
    - `.htaccess` (File Manager may hide dotfiles by default — enable
      **Settings → Show Hidden Files (dotfiles)** in the top-right of File
      Manager before uploading/checking this one)
@@ -77,9 +124,8 @@ Search each file for these and replace with real values:
 
 | Placeholder | Found in | Replace with |
 |---|---|---|
-| `RM47` | `index.html`, `index-b.html` | Actual price, if different |
-| `#BELI` | `index.html`, `index-b.html` | Real payment gateway checkout link |
-| `60123456789` | `index.html`, `index-b.html`, `terma.html`, `terima-kasih.html` (WhatsApp `wa.me` links) | Real WhatsApp support number, e.g. `601XXXXXXXX` |
+| ~~`RM47`~~ / ~~`#BELI`~~ | — | **Done.** All "Dapatkan E-book" buttons now link to `checkout.html`, which creates a real Chip Collect purchase via `create-purchase.php`. See "Payment gateway setup" above — `chip-config.php` still needs to exist on the server for this to actually work. |
+| `60123456789` | `index.html`, `index-b.html`, `terma.html`, `terima-kasih.html`, `checkout.html` (WhatsApp `wa.me` links) | Real WhatsApp support number, e.g. `601XXXXXXXX` |
 | `domain.my` | `<link rel="canonical">` and `og:*` tags in all 4 HTML files | Real live domain |
 | `og-image.jpg` | `og:image` meta tag in `index.html` | Real 1200×630px social share image, uploaded to the same host |
 | `TESTIMONI` block | `index.html` (commented out, near the bottom) | Real customer testimonials only — uncomment and fill in once you have genuine quotes. Do not fabricate names, quotes, buyer counts, or before/after results. |
