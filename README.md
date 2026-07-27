@@ -33,6 +33,10 @@ CSS and JS. The only external request is Google Fonts.
   browser — it only ever exists inside this server-side request.
 - `chip-config.example.php` — template for the Chip credentials file.
   **Not** the real credentials — see "Payment gateway setup" below.
+- `chip-callback.php` — server-to-server webhook Chip calls when a
+  purchase is paid. Verifies the request is genuinely from Chip, then
+  emails the customer their download link(s). See "Automatic delivery
+  email" below.
 
 **Note on page weight:** the original 60KB budget was for the HTML document
 itself, before any product photos existed. With both images added, total
@@ -49,14 +53,53 @@ publicly reachable by guessing/finding the URL, even if it's not linked
 from anywhere — there is no real access control on a plain file sitting in
 a shared-hosting web root.
 
-Instead, deliver the PDF through your payment gateway's own delivery
-system (most Malaysian gateways — e.g. SenangPay, ToyyibPay, Payhip-style
-checkouts — can attach a digital file to the product and email it, or show
-a one-time/expiring download link on their own hosted success page), or
-host the file in a private/non-web-accessible location and generate signed
-or expiring links. The `terima-kasih.html` download button and the "resend
-via WhatsApp" flow both assume the real PDF link lives outside
-`public_html`.
+The PDF and the video add-on both live on Google Drive (see "Automatic
+delivery email" below for the actual links), shared as "Anyone with the
+link can view" — not uploaded to this server at all. The
+`terima-kasih.html` page also links directly to the Drive files as a
+backup in case the email doesn't arrive.
+
+**Note:** a public "anyone with the link" Google Drive file isn't
+access-controlled — anyone who gets hold of the link (forwarded,
+screenshotted, leaked) can access it. That's an accepted tradeoff for
+simplicity here, not a hard security boundary. If that becomes a problem
+later (e.g. the link gets shared publicly), the fix is to swap it for a
+signed/expiring download link from a proper file host, and only that one
+link (in `chip-callback.php` and `terima-kasih.html`) needs to change.
+
+## ✉️ Automatic delivery email — how it works
+
+When a customer completes payment, Chip calls `chip-callback.php`
+server-to-server (a "success callback") with the paid purchase details.
+That script:
+
+1. **Verifies the request is genuinely from Chip** — checks the
+   `X-Signature` header against Chip's public key (fetched live from
+   their API) using RSA/SHA-256. Anyone could otherwise POST a fake
+   "paid" event to this URL, so this check is not optional.
+2. Confirms the purchase `status` is `"paid"`.
+3. Checks whether the video add-on (RM77 line item) was purchased.
+4. Emails the customer (their `client.email` from checkout) via PHP's
+   built-in `mail()` — the e-book link always, the video folder link only
+   if they bought the add-on.
+5. Records the purchase ID in `sent-purchases.php` (auto-created on the
+   server, gitignored, not part of the repo) so a retried webhook from
+   Chip never sends the same customer a duplicate email.
+
+**Download links** are hardcoded near the top of `chip-callback.php` as
+`$EBOOK_LINK` and `$VIDEO_BUMP_LINK`. Update those two lines (and the
+matching links in `terima-kasih.html`) if the files ever move.
+
+**⚠️ Deliverability caveat:** PHP's `mail()` is the zero-dependency
+option — no external service, no API key to manage — but shared hosting
+mail is genuinely unreliable for reaching Gmail/Yahoo/Outlook inboxes
+without proper SPF/DKIM/DMARC records configured for `coachcem.com`, and
+even then it can land in spam. Test a real purchase end-to-end and check
+spam folders before relying on this. If delivery turns out to be
+unreliable, the fix is swapping `mail()` in `chip-callback.php` for a
+transactional email provider (Brevo, Mailgun, Resend, etc. all have free
+tiers) — ask before adding that dependency, since it means holding
+another API key in `chip-config.php`.
 
 ## ⚠️ Payment gateway setup (Chip) — do this before checkout.html works
 
@@ -112,6 +155,7 @@ Chip dashboard afterward and update `chip-config.php` with the new one.
    - `og-image.jpg`
    - `checkout.html`
    - `create-purchase.php`
+   - `chip-callback.php`
    - `.htaccess` (File Manager may hide dotfiles by default — enable
      **Settings → Show Hidden Files (dotfiles)** in the top-right of File
      Manager before uploading/checking this one)
@@ -138,7 +182,7 @@ Search each file for these and replace with real values:
 | `[Nama Syarikat / Pemilik Perniagaan]` | `terma.html`, section 1 | Registered business/owner name |
 | `[Nombor SSM]` | `terma.html`, section 1 | SSM registration number |
 | `[emel@domain.my]` | `terma.html`, section 6 | Real support email |
-| PDF download link | `terima-kasih.html` (the "Muat Turun PDF Sekarang" button `href`) | Real delivery link from your payment gateway or private file host — **not** a `public_html` path |
+| ~~PDF download link~~ | — | **Done.** `terima-kasih.html` and `chip-callback.php` both point at the real Google Drive links. See "Automatic delivery email" above if these ever need to change. |
 
 ## What was fixed / built
 

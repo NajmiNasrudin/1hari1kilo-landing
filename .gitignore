@@ -4,3 +4,6 @@ Thumbs.db
 
 # Never commit real payment gateway credentials
 chip-config.php
+
+# Runtime state, not source -- created automatically on the server
+sent-purchases.php

@@ -66,6 +66,7 @@ $payload = array(
     ),
     'success_redirect' => $origin . '/terima-kasih.html',
     'failure_redirect' => $origin . '/checkout.html',
+    'success_callback' => $origin . '/chip-callback.php',
 );
 
 $ch = curl_init('https://gate.chip-in.asia/api/v1/purchases/');
