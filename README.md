@@ -19,6 +19,10 @@ CSS and JS. The only external request is Google Fonts.
 - `ebook-cover.jpg` — e-book cover mockup, shown in the final pricing/CTA
   section of `index.html` and `index-b.html` (400×570, ~58KB — already
   resized and compressed for web)
+- `og-image.jpg` — social share preview image (1200×630) referenced by the
+  `og:image`/`twitter:image` tags in `index.html` and `index-b.html`, so a
+  link preview shows up when the page is shared on Facebook, WhatsApp,
+  Twitter/X, etc.
 - `checkout.html` — checkout page (buyer info form + order bump for the
   video add-on + order summary). Every "Dapatkan E-book" button on
   `index.html`/`index-b.html` links here.
@@ -105,6 +109,7 @@ Chip dashboard afterward and update `chip-config.php` with the new one.
    - `terima-kasih.html`
    - `coach-cem.jpg`
    - `ebook-cover.jpg`
+   - `og-image.jpg`
    - `checkout.html`
    - `create-purchase.php`
    - `.htaccess` (File Manager may hide dotfiles by default — enable
@@ -126,8 +131,7 @@ Search each file for these and replace with real values:
 |---|---|---|
 | ~~`RM47`~~ / ~~`#BELI`~~ | — | **Done.** All "Dapatkan E-book" buttons now link to `checkout.html`, which creates a real Chip Collect purchase via `create-purchase.php`. See "Payment gateway setup" above — `chip-config.php` still needs to exist on the server for this to actually work. |
 | `60123456789` | `index.html`, `index-b.html`, `terma.html`, `terima-kasih.html`, `checkout.html` (WhatsApp `wa.me` links) | Real WhatsApp support number, e.g. `601XXXXXXXX` |
-| `domain.my` | `<link rel="canonical">` and `og:*` tags in all 4 HTML files | Real live domain |
-| `og-image.jpg` | `og:image` meta tag in `index.html` | Real 1200×630px social share image, uploaded to the same host |
+| ~~`domain.my`~~ / ~~`og-image.jpg`~~ | — | **Done.** `index.html`/`index-b.html` canonical, `og:*` and `twitter:*` tags now point to `https://coachcem.com/1hari1/`, and `og-image.jpg` (1200×630, generated from the brand system + ebook cover) is deployed alongside the site. If the domain or `/1hari1` path ever changes, update these tags to match. |
 | `TESTIMONI` block | `index.html` (commented out, near the bottom) | Real customer testimonials only — uncomment and fill in once you have genuine quotes. Do not fabricate names, quotes, buyer counts, or before/after results. |
 | GA4 tracking code | `<head>` comment block in `index.html` and `terima-kasih.html` | Real GA4 measurement ID + snippet, if you want analytics |
 | Refund policy text | `terma.html`, section 4 | Your actual refund policy (duration, conditions, process) |

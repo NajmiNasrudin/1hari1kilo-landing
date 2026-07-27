@@ -9,6 +9,7 @@ deployment:
     - /bin/cp -R terima-kasih.html $DEPLOYPATH
     - /bin/cp -R coach-cem.jpg $DEPLOYPATH
     - /bin/cp -R ebook-cover.jpg $DEPLOYPATH
+    - /bin/cp -R og-image.jpg $DEPLOYPATH
     - /bin/cp -R checkout.html $DEPLOYPATH
     - /bin/cp -R create-purchase.php $DEPLOYPATH
     - /bin/cp -R .htaccess $DEPLOYPATH
