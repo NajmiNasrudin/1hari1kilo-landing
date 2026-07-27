@@ -91,25 +91,6 @@ a{color:inherit}
   .hero-cover{width:360px;margin:0}
 }
 
-/* BIA READOUT */
-.bia{background:#131315;border:1px solid #2A2A2D;border-radius:8px;padding:24px 20px;margin:32px 0}
-.bia-head{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:18px;flex-wrap:wrap;gap:6px}
-.bia-title{font-family:'IBM Plex Mono',monospace;font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:var(--mist)}
-.bia-tag{font-family:'IBM Plex Mono',monospace;font-size:.7rem;letter-spacing:.08em;color:var(--otot);border:1px solid var(--otot);border-radius:20px;padding:2px 10px}
-.bia-weight{display:flex;align-items:baseline;gap:8px;margin-bottom:24px}
-.bia-weight-num{font-family:'Archivo',Arial,sans-serif;font-weight:900;font-size:3.2rem;color:var(--paper);line-height:1}
-.bia-weight-unit{font-family:'IBM Plex Mono',monospace;color:var(--mist);font-size:1rem}
-.bia-bars{display:flex;flex-direction:column;gap:14px}
-.bia-bar-row{display:grid;grid-template-columns:56px 1fr 48px;gap:10px;align-items:center}
-.bia-bar-label{font-family:'IBM Plex Mono',monospace;font-size:.72rem;color:var(--mist);letter-spacing:.05em}
-.bia-bar-track{background:#232326;border-radius:20px;height:10px;overflow:hidden}
-.bia-bar-fill{height:100%;border-radius:20px;width:0}
-.bia-bar-fill.air{background:var(--air)}
-.bia-bar-fill.otot{background:var(--otot)}
-.bia-bar-fill.lemak{background:var(--lemak)}
-.bia-bar-value{font-family:'IBM Plex Mono',monospace;font-size:.78rem;color:var(--paper);text-align:right}
-.bia-caption{font-family:'IBM Plex Mono',monospace;font-size:.68rem;color:var(--mist);margin:18px 0 0}
-
 /* FACTS LIST */
 .facts{list-style:none;margin:24px 0 0;padding:0;display:flex;flex-direction:column;gap:18px}
 .facts li{display:grid;grid-template-columns:40px 1fr;gap:14px}
@@ -160,7 +141,6 @@ a{color:inherit}
 
 @media(min-width:600px){
   .band{padding:88px 32px}
-  .bia-weight-num{font-size:4rem}
 }
 
 @media (prefers-reduced-motion: reduce){
@@ -183,35 +163,6 @@ a{color:inherit}
       <div class="hero-copy">
         <h1>Timbang Minggu Depan. Acik <span class="accent">Lebih</span> 3kg.</h1>
         <p class="lede">Baju dah ada janji temu, kenduri minggu depan, atau sesi timbang gym — dan nombor tu tetap tak nak turun macam yang acik nak. Sebelum acik panik, <strong>Cheat Code 1 Hari 1KG</strong> tunjukkan apa yang sebenarnya berlaku pada badan acik, dan kenapa nombor tu tak sepenuhnya cerita tentang lemak.</p>
-
-        <div class="bia" id="bia" role="img" aria-label="Simulasi bacaan BIA: berat turun daripada 82.4 kepada 80.4 kilogram dalam masa sehari. Air badan turun mendadak, otot turun sedikit, lemak hampir tidak berubah.">
-          <div class="bia-head">
-            <span class="bia-title">Bacaan BIA &middot; Simulasi</span>
-            <span class="bia-tag">Sehari</span>
-          </div>
-          <div class="bia-weight" aria-hidden="true">
-            <span class="bia-weight-num" id="biaWeight">80.4</span>
-            <span class="bia-weight-unit">KG</span>
-          </div>
-          <div class="bia-bars" aria-hidden="true">
-            <div class="bia-bar-row">
-              <span class="bia-bar-label">AIR</span>
-              <div class="bia-bar-track"><div class="bia-bar-fill air" id="barAir" style="width:44%"></div></div>
-              <span class="bia-bar-value" id="valAir">44.1%</span>
-            </div>
-            <div class="bia-bar-row">
-              <span class="bia-bar-label">OTOT</span>
-              <div class="bia-bar-track"><div class="bia-bar-fill otot" id="barOtot" style="width:33%"></div></div>
-              <span class="bia-bar-value" id="valOtot">32.6%</span>
-            </div>
-            <div class="bia-bar-row">
-              <span class="bia-bar-label">LEMAK</span>
-              <div class="bia-bar-track"><div class="bia-bar-fill lemak" id="barLemak" style="width:30%"></div></div>
-              <span class="bia-bar-value" id="valLemak">29.9%</span>
-            </div>
-          </div>
-          <p class="bia-caption" aria-hidden="true">*Simulasi visual untuk tujuan ilustrasi. Nombor sebenar berbeza ikut individu.</p>
-        </div>
       </div>
       <img class="hero-cover" src="ebook-cover.jpg" alt="Muka depan e-book Cheat Code 1 Hari 1KG oleh Coach Cem" width="400" height="570" loading="lazy">
     </div>
@@ -371,93 +322,6 @@ a{color:inherit}
   </div>
 </footer>
 
-<script>
-(function(){
-  "use strict";
-  var reduceMotion = false;
-  if(window.matchMedia){
-    reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  }
-
-  var START = { weight: 82.4, air: 52.4, otot: 33.2, lemak: 30.1 };
-  var END   = { weight: 80.4, air: 44.1, otot: 32.6, lemak: 29.9 };
-
-  var els = {
-    bia: document.getElementById("bia"),
-    weight: document.getElementById("biaWeight"),
-    barAir: document.getElementById("barAir"),
-    valAir: document.getElementById("valAir"),
-    barOtot: document.getElementById("barOtot"),
-    valOtot: document.getElementById("valOtot"),
-    barLemak: document.getElementById("barLemak"),
-    valLemak: document.getElementById("valLemak")
-  };
-
-  if(!els.bia || reduceMotion){
-    return;
-  }
-
-  function setState(s){
-    els.weight.textContent = s.weight.toFixed(1);
-    els.barAir.style.width = s.air + "%";
-    els.valAir.textContent = s.air.toFixed(1) + "%";
-    els.barOtot.style.width = s.otot + "%";
-    els.valOtot.textContent = s.otot.toFixed(1) + "%";
-    els.barLemak.style.width = s.lemak + "%";
-    els.valLemak.textContent = s.lemak.toFixed(1) + "%";
-  }
-
-  setState(START);
-
-  var animated = false;
-  var duration = 1600;
-
-  function easeOutCubic(t){
-    return 1 - Math.pow(1 - t, 3);
-  }
-
-  function lerp(a, b, t){
-    return a + (b - a) * t;
-  }
-
-  function animate(){
-    if(animated){ return; }
-    animated = true;
-    var startTime = null;
-
-    function step(ts){
-      if(startTime === null){ startTime = ts; }
-      var elapsed = ts - startTime;
-      var t = Math.min(elapsed / duration, 1);
-      var e = easeOutCubic(t);
-      setState({
-        weight: lerp(START.weight, END.weight, e),
-        air: lerp(START.air, END.air, e),
-        otot: lerp(START.otot, END.otot, e),
-        lemak: lerp(START.lemak, END.lemak, e)
-      });
-      if(t < 1){
-        window.requestAnimationFrame(step);
-      }
-    }
-    window.requestAnimationFrame(step);
-  }
-
-  if("IntersectionObserver" in window){
-    var observer = new IntersectionObserver(function(entries){
-      for(var i = 0; i < entries.length; i++){
-        if(entries[i].isIntersecting){
-          animate();
-          observer.disconnect();
-        }
-      }
-    }, { threshold: 0.5 });
-    observer.observe(els.bia);
-  } else {
-    animate();
-  }
-})();
-</script>
 
 </body>
 </html>

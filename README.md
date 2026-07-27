@@ -173,8 +173,7 @@ and update the matching config file with the new value.
      Manager before uploading/checking this one)
 4. Do **not** upload the ebook PDF here. See the warning above.
 5. Once uploaded, visit `https://yourdomain.my/` and confirm the page
-   loads, the hero readout animates on scroll, and both `terma.html` and
-   `terima-kasih.html` load correctly.
+   loads correctly, and both `terma.html` and `terima-kasih.html` do too.
 6. If you're running the A/B test, point half your ad traffic at
    `/index-b.html` and half at `/` (or use your ad platform's own split
    testing / URL rotation to alternate between the two).
@@ -200,16 +199,18 @@ Search each file for these and replace with real values:
 
 - Built `index.html` from scratch (folder was empty — no prior file to
   iterate on).
-- The animated BIA readout (hero) ticks weight 82.4 → 80.4kg on scroll
-  into view, with water dropping sharply, muscle dropping slightly, and
-  fat barely moving. It defaults to the **end state** in markup, so the
-  page reads correctly with JavaScript disabled; JS resets to the start
-  state on load and animates forward on scroll-into-view. It respects
-  `prefers-reduced-motion` by skipping the animation entirely and showing
-  the end state.
 - Eligibility/warning section sits above the final CTA/pricing band, at
   full text size, unmodified in tone.
 - No fabricated testimonials, buyer counts, ratings, or urgency timers.
+
+**Note:** the hero originally had an animated BIA (InBody) readout
+simulation as its signature visual, explained by a "why the scale
+misleads you" thesis section further down the page. Both were later
+removed as the page's positioning shifted toward BMI-requirement use
+cases (screening tests, interviews, medical card applications) instead
+— `index.html`/`index-b.html` no longer contain that JS/CSS at all, and
+the page has no JavaScript-driven functionality of its own anymore
+(only `checkout.html` does, for the payment flow).
 
 ## Acceptance checklist
 
@@ -223,9 +224,8 @@ Search each file for these and replace with real values:
       `#5A6570` on paper `#EDEFF0` ≈ 5.15:1; mist `#A7B0B8` on ink
       `#0B0B0C` ≈ 8.9:1; ink on volt CTA buttons ≈ 13:1)
 - [x] `prefers-reduced-motion` honoured (global transition/animation kill
-      switch + BIA script early-returns)
-- [x] Works with JavaScript disabled — BIA readout shows its end state by
-      default in the HTML/CSS; FAQ uses native `<details>/<summary>`
-      (needs no JS)
+      switch)
+- [x] Works with JavaScript disabled — `index.html`/`index-b.html` have no
+      JS at all now; FAQ uses native `<details>/<summary>` (needs no JS)
 - [x] No console errors
-- [x] `index.html` is ~19KB, well under the 60KB budget
+- [x] `index.html` is ~16KB, well under the 60KB budget
