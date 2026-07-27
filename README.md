@@ -32,10 +32,12 @@ CSS and JS. The only external request is Google Fonts.
   cPanel shared hosting). The Chip secret key is never sent to the
   browser — it only ever exists inside this server-side request.
 - `chip-config.example.php` — template for the Chip credentials file.
-  **Not** the real credentials — see "Payment gateway setup" below.
+  **Not** the real credentials — see "Payment gateway & email setup" below.
+- `brevo-config.example.php` — template for the Brevo (transactional
+  email) credentials file. **Not** the real credentials.
 - `chip-callback.php` — server-to-server webhook Chip calls when a
   purchase is paid. Verifies the request is genuinely from Chip, then
-  emails the customer their download link(s). See "Automatic delivery
+  emails the customer their download link(s) via Brevo. See "Automatic delivery
   email" below.
 
 **Note on page weight:** the original 60KB budget was for the HTML document
@@ -79,9 +81,13 @@ That script:
    "paid" event to this URL, so this check is not optional.
 2. Confirms the purchase `status` is `"paid"`.
 3. Checks whether the video add-on (RM77 line item) was purchased.
-4. Emails the customer (their `client.email` from checkout) via PHP's
-   built-in `mail()` — the e-book link always, the video folder link only
-   if they bought the add-on.
+4. Emails the customer (their `client.email` from checkout) via
+   **Brevo's transactional email API** — the e-book link always, the
+   video folder link only if they bought the add-on. (PHP's built-in
+   `mail()` was tried first — it silently failed on this host, since
+   Spaceship routes outbound mail through its own "Spacemail" product
+   rather than the standard sendmail path `mail()` expects. Brevo
+   sidesteps that entirely and is more reliable anyway.)
 5. Records the purchase ID in `sent-purchases.php` (auto-created on the
    server, gitignored, not part of the repo) so a retried webhook from
    Chip never sends the same customer a duplicate email.
@@ -90,18 +96,18 @@ That script:
 `$EBOOK_LINK` and `$VIDEO_BUMP_LINK`. Update those two lines (and the
 matching links in `terima-kasih.html`) if the files ever move.
 
-**⚠️ Deliverability caveat:** PHP's `mail()` is the zero-dependency
-option — no external service, no API key to manage — but shared hosting
-mail is genuinely unreliable for reaching Gmail/Yahoo/Outlook inboxes
-without proper SPF/DKIM/DMARC records configured for `coachcem.com`, and
-even then it can land in spam. Test a real purchase end-to-end and check
-spam folders before relying on this. If delivery turns out to be
-unreliable, the fix is swapping `mail()` in `chip-callback.php` for a
-transactional email provider (Brevo, Mailgun, Resend, etc. all have free
-tiers) — ask before adding that dependency, since it means holding
-another API key in `chip-config.php`.
+**Brevo setup:** credentials live in `brevo-config.php` (gitignored, same
+pattern as `chip-config.php` — see "Payment gateway setup" below, the
+same rules apply: create it directly on the server, never commit it).
+Get the API key from Brevo dashboard → Settings → SMTP & API → the
+**"API Keys"** tab specifically (not "SMTP" — that's a different
+credential and won't work here; it must start with `xkeysib-`). The
+sender email (`noreply@coachcem.com` by default) must be a verified
+sender in Brevo before emails will send — check Brevo's dashboard if
+emails stop going out. Brevo's free tier covers 300 emails/day, which is
+almost certainly enough for this product.
 
-## ⚠️ Payment gateway setup (Chip) — do this before checkout.html works
+## ⚠️ Payment gateway & email setup (Chip + Brevo) — do this before checkout.html works
 
 `checkout.html` calls `create-purchase.php`, which needs a Chip Collect
 secret key and brand ID to create purchases. Those credentials live in
@@ -130,11 +136,17 @@ File Manager, in the same folder as `create-purchase.php`
    the tracked repo files only), so it persists across every future
    redeploy without needing to be re-created.
 
-Since a Chip secret key was shared in this conversation to get the
-integration built and tested, treat that key as a session-scoped secret
-in the transcript — it's stored server-side only, never committed to
-git, but if you want extra peace of mind, you can regenerate it in the
-Chip dashboard afterward and update `chip-config.php` with the new one.
+Repeat the exact same steps for **`brevo-config.php`** in the same
+folder (content template in `brevo-config.example.php`) — the email
+delivery system needs both files to exist before `chip-callback.php`
+will work.
+
+Since a Chip secret key and a Brevo API key were both shared in this
+conversation to get the integration built and tested, treat them as
+session-scoped secrets in the transcript — they're stored server-side
+only, never committed to git, but if you want extra peace of mind, you
+can regenerate either one afterward (Chip dashboard / Brevo dashboard)
+and update the matching config file with the new value.
 
 ## Deploying to cPanel (File Manager)
 

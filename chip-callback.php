@@ -13,8 +13,6 @@ $EBOOK_LINK = 'https://drive.google.com/file/d/1SHg7aTaEtEDEhYDRf5Xt0gip6yKd8NZO
 $VIDEO_BUMP_LINK = 'https://drive.google.com/drive/folders/1kLX397w5l3nkt7sji22yTpg2Oq-P2Vtq';
 $VIDEO_BUMP_PRICE = 7700;
 $WHATSAPP_LINK = 'https://wa.me/60123456789';
-$FROM_EMAIL = 'noreply@coachcem.com';
-$FROM_NAME = 'Coach Cem / TeamCC7';
 
 function respond($code, $body) {
     http_response_code($code);
@@ -31,6 +29,12 @@ if (!file_exists($configPath)) {
     respond(500, array('error' => 'Not configured.'));
 }
 $config = require $configPath;
+
+$brevoConfigPath = __DIR__ . '/brevo-config.php';
+if (!file_exists($brevoConfigPath)) {
+    respond(500, array('error' => 'Email sender not configured.'));
+}
+$brevoConfig = require $brevoConfigPath;
 
 $rawBody = file_get_contents('php://input');
 $signatureHeader = isset($_SERVER['HTTP_X_SIGNATURE']) ? $_SERVER['HTTP_X_SIGNATURE'] : '';
@@ -127,13 +131,36 @@ $body = '
   </div>
 </div>';
 
-$headers = array();
-$headers[] = 'MIME-Version: 1.0';
-$headers[] = 'Content-Type: text/html; charset=UTF-8';
-$headers[] = 'From: ' . $FROM_NAME . ' <' . $FROM_EMAIL . '>';
-$headers[] = 'Reply-To: ' . $FROM_EMAIL;
+$emailPayload = array(
+    'sender' => array(
+        'email' => $brevoConfig['sender_email'],
+        'name'  => $brevoConfig['sender_name'],
+    ),
+    'to' => array(
+        array('email' => $email, 'name' => $fullName),
+    ),
+    'replyTo' => array('email' => $brevoConfig['sender_email']),
+    'subject' => $subject,
+    'htmlContent' => $body,
+);
 
-$mailSent = mail($email, $subject, $body, implode("\r\n", $headers));
+$ch = curl_init('https://api.brevo.com/v3/smtp/email');
+curl_setopt_array($ch, array(
+    CURLOPT_RETURNTRANSFER => true,
+    CURLOPT_POST => true,
+    CURLOPT_POSTFIELDS => json_encode($emailPayload),
+    CURLOPT_HTTPHEADER => array(
+        'api-key: ' . $brevoConfig['api_key'],
+        'Content-Type: application/json',
+        'Accept: application/json',
+    ),
+    CURLOPT_TIMEOUT => 20,
+));
+$emailResponse = curl_exec($ch);
+$emailStatus = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+curl_close($ch);
+
+$mailSent = ($emailStatus === 201);
 
 $sent[$purchaseId] = time();
 file_put_contents($dedupeFile, "<?php\nreturn " . var_export($sent, true) . ";\n");
