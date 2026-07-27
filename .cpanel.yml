@@ -1,7 +1,7 @@
 ---
 deployment:
   tasks:
-    - export DEPLOYPATH=/home/zjoawlrttx/public_html/1hari1/
+    - export DEPLOYPATH=/home/zjoawlrttx/coachcem.com/1hari1/
     - /bin/mkdir -p $DEPLOYPATH
     - /bin/cp -R index.html $DEPLOYPATH
     - /bin/cp -R index-b.html $DEPLOYPATH
