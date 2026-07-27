@@ -76,13 +76,13 @@ a{color:inherit}
 .hero-brand strong{color:var(--volt)}
 .hero h1{margin-bottom:18px}
 .hero h1 .accent{color:var(--volt)}
-.hero-top{display:flex;flex-direction:column;gap:24px;align-items:center}
-.hero-copy{width:100%}
-.hero-cover{width:130px;height:auto;display:block;margin:0 auto;border-radius:6px;box-shadow:0 16px 32px rgba(0,0,0,.5);transform:rotate(-2deg);flex-shrink:0}
+.hero-top{display:flex;flex-direction:column;gap:24px}
+.hero-copy{width:100%;min-width:0}
+.hero-cover{width:200px;height:auto;display:block;margin:0 auto;border-radius:6px;box-shadow:0 16px 32px rgba(0,0,0,.5);transform:rotate(-2deg);flex-shrink:0}
 @media(min-width:600px){
-  .hero-top{flex-direction:row;align-items:flex-start;gap:32px}
+  .hero-top{flex-direction:row;align-items:center;gap:40px}
   .hero-copy{flex:1}
-  .hero-cover{width:180px;margin:6px 0 0}
+  .hero-cover{width:360px;margin:0}
 }
 
 /* BIA READOUT */
@@ -177,37 +177,37 @@ a{color:inherit}
       <div class="hero-copy">
         <h1>Timbang Minggu Depan. Acik <span class="accent">Lebih</span> 3kg.</h1>
         <p class="lede">Baju dah ada janji temu, kenduri minggu depan, atau sesi timbang gym — dan nombor tu tetap tak nak turun macam yang acik nak. Sebelum acik panik, <strong>Cheat Code 1 Hari 1KG</strong> tunjukkan apa yang sebenarnya berlaku pada badan acik, dan kenapa nombor tu tak sepenuhnya cerita tentang lemak.</p>
+
+        <div class="bia" id="bia" role="img" aria-label="Simulasi bacaan BIA: berat turun daripada 82.4 kepada 80.4 kilogram dalam masa sehari. Air badan turun mendadak, otot turun sedikit, lemak hampir tidak berubah.">
+          <div class="bia-head">
+            <span class="bia-title">Bacaan BIA &middot; Simulasi</span>
+            <span class="bia-tag">Sehari</span>
+          </div>
+          <div class="bia-weight" aria-hidden="true">
+            <span class="bia-weight-num" id="biaWeight">80.4</span>
+            <span class="bia-weight-unit">KG</span>
+          </div>
+          <div class="bia-bars" aria-hidden="true">
+            <div class="bia-bar-row">
+              <span class="bia-bar-label">AIR</span>
+              <div class="bia-bar-track"><div class="bia-bar-fill air" id="barAir" style="width:44%"></div></div>
+              <span class="bia-bar-value" id="valAir">44.1%</span>
+            </div>
+            <div class="bia-bar-row">
+              <span class="bia-bar-label">OTOT</span>
+              <div class="bia-bar-track"><div class="bia-bar-fill otot" id="barOtot" style="width:33%"></div></div>
+              <span class="bia-bar-value" id="valOtot">32.6%</span>
+            </div>
+            <div class="bia-bar-row">
+              <span class="bia-bar-label">LEMAK</span>
+              <div class="bia-bar-track"><div class="bia-bar-fill lemak" id="barLemak" style="width:30%"></div></div>
+              <span class="bia-bar-value" id="valLemak">29.9%</span>
+            </div>
+          </div>
+          <p class="bia-caption" aria-hidden="true">*Simulasi visual untuk tujuan ilustrasi. Nombor sebenar berbeza ikut individu.</p>
+        </div>
       </div>
       <img class="hero-cover" src="ebook-cover.jpg" alt="Muka depan e-book Cheat Code 1 Hari 1KG oleh Coach Cem" width="400" height="570" loading="lazy">
-    </div>
-
-    <div class="bia" id="bia" role="img" aria-label="Simulasi bacaan BIA: berat turun daripada 82.4 kepada 80.4 kilogram dalam masa sehari. Air badan turun mendadak, otot turun sedikit, lemak hampir tidak berubah.">
-      <div class="bia-head">
-        <span class="bia-title">Bacaan BIA &middot; Simulasi</span>
-        <span class="bia-tag">Sehari</span>
-      </div>
-      <div class="bia-weight" aria-hidden="true">
-        <span class="bia-weight-num" id="biaWeight">80.4</span>
-        <span class="bia-weight-unit">KG</span>
-      </div>
-      <div class="bia-bars" aria-hidden="true">
-        <div class="bia-bar-row">
-          <span class="bia-bar-label">AIR</span>
-          <div class="bia-bar-track"><div class="bia-bar-fill air" id="barAir" style="width:44%"></div></div>
-          <span class="bia-bar-value" id="valAir">44.1%</span>
-        </div>
-        <div class="bia-bar-row">
-          <span class="bia-bar-label">OTOT</span>
-          <div class="bia-bar-track"><div class="bia-bar-fill otot" id="barOtot" style="width:33%"></div></div>
-          <span class="bia-bar-value" id="valOtot">32.6%</span>
-        </div>
-        <div class="bia-bar-row">
-          <span class="bia-bar-label">LEMAK</span>
-          <div class="bia-bar-track"><div class="bia-bar-fill lemak" id="barLemak" style="width:30%"></div></div>
-          <span class="bia-bar-value" id="valLemak">29.9%</span>
-        </div>
-      </div>
-      <p class="bia-caption" aria-hidden="true">*Simulasi visual untuk tujuan ilustrasi. Nombor sebenar berbeza ikut individu.</p>
     </div>
 
     <div class="cta-row">
