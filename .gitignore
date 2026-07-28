@@ -5,7 +5,6 @@ Thumbs.db
 # Never commit real payment gateway / email API credentials
 chip-config.php
 brevo-config.php
-smtp-config.php
 
 # Runtime state, not source -- created automatically on the server
 sent-purchases.php
