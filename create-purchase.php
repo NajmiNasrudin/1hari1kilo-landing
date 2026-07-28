@@ -55,6 +55,7 @@ $origin = $scheme . '://' . $_SERVER['HTTP_HOST'] . dirname($_SERVER['SCRIPT_NAM
 
 $payload = array(
     'brand_id' => $config['brand_id'],
+    'reference' => '1hari1-' . date('Ymd') . '-' . strtoupper(substr(uniqid(), -6)),
     'client' => array(
         'full_name' => $fullName,
         'email'     => $email,
