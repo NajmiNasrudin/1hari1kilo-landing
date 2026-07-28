@@ -13,7 +13,7 @@ $EBOOK_LINK = 'https://drive.google.com/file/d/1SHg7aTaEtEDEhYDRf5Xt0gip6yKd8NZO
 $VIDEO_BUMP_LINK = 'https://drive.google.com/drive/folders/1kLX397w5l3nkt7sji22yTpg2Oq-P2Vtq';
 $VIDEO_BUMP_PRICE = 7700;
 $WHATSAPP_LINK = 'https://wa.me/60123456789';
-$OWNER_NOTIFY_EMAIL = 'akucem7@me.com';
+$OWNER_NOTIFY_EMAIL = 'ashraf.hasim86@gmail.com';
 
 function respond($code, $body) {
     http_response_code($code);
