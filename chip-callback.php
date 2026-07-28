@@ -9,6 +9,12 @@
 
 header('Content-Type: application/json');
 
+require __DIR__ . '/phpmailer/src/Exception.php';
+require __DIR__ . '/phpmailer/src/PHPMailer.php';
+require __DIR__ . '/phpmailer/src/SMTP.php';
+
+use PHPMailer\PHPMailer\PHPMailer;
+
 $EBOOK_LINK = 'https://drive.google.com/file/d/1SHg7aTaEtEDEhYDRf5Xt0gip6yKd8NZO/view?usp=sharing';
 $VIDEO_BUMP_LINK = 'https://drive.google.com/drive/folders/1kLX397w5l3nkt7sji22yTpg2Oq-P2Vtq';
 $VIDEO_BUMP_PRICE = 7700;
@@ -21,37 +27,31 @@ function respond($code, $body) {
     exit;
 }
 
-function sendBrevoEmail($brevoConfig, $toEmail, $toName, $subject, $htmlBody) {
-    $payload = array(
-        'sender' => array(
-            'email' => $brevoConfig['sender_email'],
-            'name'  => $brevoConfig['sender_name'],
-        ),
-        'to' => array(
-            array('email' => $toEmail, 'name' => $toName),
-        ),
-        'replyTo' => array('email' => $brevoConfig['sender_email']),
-        'subject' => $subject,
-        'htmlContent' => $htmlBody,
-    );
+function sendSmtpEmail($smtpConfig, $toEmail, $toName, $subject, $htmlBody) {
+    $mail = new PHPMailer(true);
+    try {
+        $mail->isSMTP();
+        $mail->Host       = $smtpConfig['host'];
+        $mail->Port       = $smtpConfig['port'];
+        $mail->SMTPAuth   = true;
+        $mail->Username   = $smtpConfig['username'];
+        $mail->Password   = $smtpConfig['password'];
+        $mail->SMTPSecure = $smtpConfig['secure'] === 'ssl' ? PHPMailer::ENCRYPTION_SMTPS : PHPMailer::ENCRYPTION_STARTTLS;
+        $mail->CharSet    = 'UTF-8';
 
-    $ch = curl_init('https://api.brevo.com/v3/smtp/email');
-    curl_setopt_array($ch, array(
-        CURLOPT_RETURNTRANSFER => true,
-        CURLOPT_POST => true,
-        CURLOPT_POSTFIELDS => json_encode($payload),
-        CURLOPT_HTTPHEADER => array(
-            'api-key: ' . $brevoConfig['api_key'],
-            'Content-Type: application/json',
-            'Accept: application/json',
-        ),
-        CURLOPT_TIMEOUT => 20,
-    ));
-    curl_exec($ch);
-    $status = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-    curl_close($ch);
+        $mail->setFrom($smtpConfig['from_email'], $smtpConfig['from_name']);
+        $mail->addAddress($toEmail, $toName);
+        $mail->addReplyTo($smtpConfig['from_email'], $smtpConfig['from_name']);
 
-    return $status === 201;
+        $mail->isHTML(true);
+        $mail->Subject = $subject;
+        $mail->Body    = $htmlBody;
+
+        $mail->send();
+        return true;
+    } catch (Exception $e) {
+        return false;
+    }
 }
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
@@ -64,11 +64,11 @@ if (!file_exists($configPath)) {
 }
 $config = require $configPath;
 
-$brevoConfigPath = __DIR__ . '/brevo-config.php';
-if (!file_exists($brevoConfigPath)) {
+$smtpConfigPath = __DIR__ . '/smtp-config.php';
+if (!file_exists($smtpConfigPath)) {
     respond(500, array('error' => 'Email sender not configured.'));
 }
-$brevoConfig = require $brevoConfigPath;
+$smtpConfig = require $smtpConfigPath;
 
 $rawBody = file_get_contents('php://input');
 $signatureHeader = isset($_SERVER['HTTP_X_SIGNATURE']) ? $_SERVER['HTTP_X_SIGNATURE'] : '';
@@ -165,7 +165,7 @@ $body = '
   </div>
 </div>';
 
-$mailSent = sendBrevoEmail($brevoConfig, $email, $fullName, $subject, $body);
+$mailSent = sendSmtpEmail($smtpConfig, $email, $fullName, $subject, $body);
 
 // Notify the owner too -- amount, buyer name, what they bought.
 $totalCents = 0;
@@ -201,7 +201,7 @@ $notifyBody = '
   </div>
 </div>';
 
-$notifySent = sendBrevoEmail($brevoConfig, $OWNER_NOTIFY_EMAIL, 'Coach Cem', $notifySubject, $notifyBody);
+$notifySent = sendSmtpEmail($smtpConfig, $OWNER_NOTIFY_EMAIL, 'Coach Cem', $notifySubject, $notifyBody);
 
 $sent[$purchaseId] = time();
 file_put_contents($dedupeFile, "<?php\nreturn " . var_export($sent, true) . ";\n");
