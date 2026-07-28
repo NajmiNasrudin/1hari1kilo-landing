@@ -13,11 +13,45 @@ $EBOOK_LINK = 'https://drive.google.com/file/d/1SHg7aTaEtEDEhYDRf5Xt0gip6yKd8NZO
 $VIDEO_BUMP_LINK = 'https://drive.google.com/drive/folders/1kLX397w5l3nkt7sji22yTpg2Oq-P2Vtq';
 $VIDEO_BUMP_PRICE = 7700;
 $WHATSAPP_LINK = 'https://wa.me/60123456789';
+$OWNER_NOTIFY_EMAIL = 'akucem7@me.com';
 
 function respond($code, $body) {
     http_response_code($code);
     echo json_encode($body);
     exit;
+}
+
+function sendBrevoEmail($brevoConfig, $toEmail, $toName, $subject, $htmlBody) {
+    $payload = array(
+        'sender' => array(
+            'email' => $brevoConfig['sender_email'],
+            'name'  => $brevoConfig['sender_name'],
+        ),
+        'to' => array(
+            array('email' => $toEmail, 'name' => $toName),
+        ),
+        'replyTo' => array('email' => $brevoConfig['sender_email']),
+        'subject' => $subject,
+        'htmlContent' => $htmlBody,
+    );
+
+    $ch = curl_init('https://api.brevo.com/v3/smtp/email');
+    curl_setopt_array($ch, array(
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_POST => true,
+        CURLOPT_POSTFIELDS => json_encode($payload),
+        CURLOPT_HTTPHEADER => array(
+            'api-key: ' . $brevoConfig['api_key'],
+            'Content-Type: application/json',
+            'Accept: application/json',
+        ),
+        CURLOPT_TIMEOUT => 20,
+    ));
+    curl_exec($ch);
+    $status = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+    curl_close($ch);
+
+    return $status === 201;
 }
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
@@ -131,38 +165,45 @@ $body = '
   </div>
 </div>';
 
-$emailPayload = array(
-    'sender' => array(
-        'email' => $brevoConfig['sender_email'],
-        'name'  => $brevoConfig['sender_name'],
-    ),
-    'to' => array(
-        array('email' => $email, 'name' => $fullName),
-    ),
-    'replyTo' => array('email' => $brevoConfig['sender_email']),
-    'subject' => $subject,
-    'htmlContent' => $body,
-);
+$mailSent = sendBrevoEmail($brevoConfig, $email, $fullName, $subject, $body);
 
-$ch = curl_init('https://api.brevo.com/v3/smtp/email');
-curl_setopt_array($ch, array(
-    CURLOPT_RETURNTRANSFER => true,
-    CURLOPT_POST => true,
-    CURLOPT_POSTFIELDS => json_encode($emailPayload),
-    CURLOPT_HTTPHEADER => array(
-        'api-key: ' . $brevoConfig['api_key'],
-        'Content-Type: application/json',
-        'Accept: application/json',
-    ),
-    CURLOPT_TIMEOUT => 20,
-));
-$emailResponse = curl_exec($ch);
-$emailStatus = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-curl_close($ch);
+// Notify the owner too -- amount, buyer name, what they bought.
+$totalCents = 0;
+$productNames = array();
+if (!empty($purchase['purchase']['products']) && is_array($purchase['purchase']['products'])) {
+    foreach ($purchase['purchase']['products'] as $product) {
+        if (isset($product['price'])) {
+            $totalCents += (int) $product['price'];
+        }
+        if (isset($product['name'])) {
+            $productNames[] = $product['name'];
+        }
+    }
+}
+$totalFormatted = 'RM' . number_format($totalCents / 100, 2);
+$phone = isset($purchase['client']['phone']) ? $purchase['client']['phone'] : '-';
+$reference = isset($purchase['reference']) ? $purchase['reference'] : '-';
 
-$mailSent = ($emailStatus === 201);
+$notifySubject = 'Pembelian Baru — ' . $fullName . ' — ' . $totalFormatted;
+$notifyBody = '
+<div style="font-family:Arial,sans-serif;max-width:480px;margin:0 auto;color:#0B0B0C;">
+  <div style="background:#0B0B0C;padding:20px;border-radius:8px 8px 0 0;">
+    <p style="color:#FFD200;font-weight:700;font-size:13px;letter-spacing:.05em;text-transform:uppercase;margin:0">Pembelian Baru — Cheat Code 1 Hari 1KG</p>
+  </div>
+  <div style="padding:20px;background:#EDEFF0;border-radius:0 0 8px 8px;font-size:14px;line-height:1.7;">
+    <p style="margin:0 0 8px"><strong>Nama:</strong> ' . htmlspecialchars($fullName) . '</p>
+    <p style="margin:0 0 8px"><strong>Emel:</strong> ' . htmlspecialchars($email) . '</p>
+    <p style="margin:0 0 8px"><strong>Telefon:</strong> ' . htmlspecialchars($phone) . '</p>
+    <p style="margin:0 0 8px"><strong>Produk:</strong> ' . htmlspecialchars(implode(', ', $productNames)) . '</p>
+    <p style="margin:0 0 8px"><strong>Jumlah:</strong> ' . htmlspecialchars($totalFormatted) . '</p>
+    <p style="margin:0 0 8px"><strong>Reference:</strong> ' . htmlspecialchars($reference) . '</p>
+    <p style="margin:0;color:#5A6570;font-size:12px;"><strong>Purchase ID:</strong> ' . htmlspecialchars($purchaseId) . '</p>
+  </div>
+</div>';
+
+$notifySent = sendBrevoEmail($brevoConfig, $OWNER_NOTIFY_EMAIL, 'Coach Cem', $notifySubject, $notifyBody);
 
 $sent[$purchaseId] = time();
 file_put_contents($dedupeFile, "<?php\nreturn " . var_export($sent, true) . ";\n");
 
-respond(200, array('ok' => true, 'mail_sent' => $mailSent));
+respond(200, array('ok' => true, 'mail_sent' => $mailSent, 'notify_sent' => $notifySent));
