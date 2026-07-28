@@ -14,3 +14,5 @@ deployment:
     - /bin/cp -R create-purchase.php $DEPLOYPATH
     - /bin/cp -R chip-callback.php $DEPLOYPATH
     - /bin/cp -R .htaccess $DEPLOYPATH
+    - /bin/mkdir -p $DEPLOYPATH/phpmailer/src
+    - /bin/cp -R phpmailer/src/. $DEPLOYPATH/phpmailer/src
