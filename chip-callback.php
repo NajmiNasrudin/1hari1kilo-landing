@@ -161,6 +161,9 @@ $body = '
     <p style="margin:0 0 16px;font-size:16px;">Terima kasih, ' . htmlspecialchars($fullName) . '!</p>
     <p style="margin:0 0 20px;font-size:15px;line-height:1.6;">Pembelian acik dah berjaya. Klik butang di bawah untuk muat turun terus:</p>
     ' . $linksHtml . '
+    <div style="background:#FDF3D0;border-radius:8px;padding:16px 20px;margin:20px 0 0;text-align:center;">
+      <p style="margin:0;font-size:13px;color:#0B0B0C;line-height:1.6;">Saya amat berharap agar acik2 menghormati ilmu yang terkandung dalam eBook ini dengan tidak berkongsi kandungan atau fail tersebut dengan orang lain tau.</p>
+    </div>
     <p style="margin:20px 0 0;font-size:13px;color:#5A6570;line-height:1.6;">Simpan pautan ni baik-baik. Kalau ada masalah muat turun, hubungi kami di <a href="' . htmlspecialchars($WHATSAPP_LINK) . '" style="color:#0B0B0C;">WhatsApp</a>.</p>
   </div>
 </div>';
