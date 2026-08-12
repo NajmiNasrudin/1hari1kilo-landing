@@ -53,9 +53,11 @@ if ($bump) {
 $scheme = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? 'https' : 'http';
 $origin = $scheme . '://' . $_SERVER['HTTP_HOST'] . dirname($_SERVER['SCRIPT_NAME']);
 
+$referencePrefix = $bump ? '1hari1-bundle-' : '1hari1-';
+
 $payload = array(
     'brand_id' => $config['brand_id'],
-    'reference' => '1hari1-' . date('Ymd') . '-' . strtoupper(substr(uniqid(), -6)),
+    'reference' => $referencePrefix . date('Ymd') . '-' . strtoupper(substr(uniqid(), -6)),
     'client' => array(
         'full_name' => $fullName,
         'email'     => $email,

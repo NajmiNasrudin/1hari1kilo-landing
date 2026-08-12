@@ -135,7 +135,12 @@ if (isset($sent[$purchaseId])) {
     respond(200, array('ok' => true, 'skipped' => 'already sent'));
 }
 
-$hasVideoBump = false;
+$reference = isset($purchase['reference']) ? $purchase['reference'] : '-';
+
+// Video bump is decided by the actual product line-up (authoritative),
+// with the "bundle" reference tag as a second, independent signal --
+// either one indicates a bundle purchase.
+$hasVideoBump = strpos($reference, 'bundle') !== false;
 if (!empty($purchase['purchase']['products']) && is_array($purchase['purchase']['products'])) {
     foreach ($purchase['purchase']['products'] as $product) {
         if (isset($product['price']) && (int) $product['price'] === $VIDEO_BUMP_PRICE) {
@@ -185,7 +190,6 @@ if (!empty($purchase['purchase']['products']) && is_array($purchase['purchase'][
 }
 $totalFormatted = 'RM' . number_format($totalCents / 100, 2);
 $phone = isset($purchase['client']['phone']) ? $purchase['client']['phone'] : '-';
-$reference = isset($purchase['reference']) ? $purchase['reference'] : '-';
 
 $notifySubject = 'Pembelian Baru — ' . $fullName . ' — ' . $totalFormatted;
 $notifyBody = '
