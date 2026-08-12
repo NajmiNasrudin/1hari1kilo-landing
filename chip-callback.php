@@ -12,7 +12,7 @@ header('Content-Type: application/json');
 $EBOOK_LINK = 'https://drive.google.com/file/d/1SHg7aTaEtEDEhYDRf5Xt0gip6yKd8NZO/view?usp=sharing';
 $VIDEO_BUMP_LINK = 'https://drive.google.com/drive/folders/1kLX397w5l3nkt7sji22yTpg2Oq-P2Vtq';
 $VIDEO_BUMP_PRICE = 7700;
-$WHATSAPP_LINK = 'https://wa.me/60123456789';
+$WHATSAPP_LINK = 'https://wa.me/60122541050';
 $OWNER_NOTIFY_EMAILS = array('ashraf.hasim86@gmail.com', 'academy.tcc7@gmail.com');
 
 function respond($code, $body) {

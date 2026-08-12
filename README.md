@@ -185,7 +185,7 @@ Search each file for these and replace with real values:
 | Placeholder | Found in | Replace with |
 |---|---|---|
 | ~~`RM47`~~ / ~~`#BELI`~~ | — | **Done.** All "Dapatkan E-book" buttons now link to `checkout.html`, which creates a real Chip Collect purchase via `create-purchase.php`. See "Payment gateway setup" above — `chip-config.php` still needs to exist on the server for this to actually work. |
-| `60123456789` | `index.html`, `index-b.html`, `terma.html`, `terima-kasih.html`, `checkout.html` (WhatsApp `wa.me` links) | Real WhatsApp support number, e.g. `601XXXXXXXX` |
+| ~~`60123456789`~~ | — | **Done.** Real WhatsApp support number (`60122541050`) now set across `index.html`, `index-b.html`, `terma.html`, `terima-kasih.html`, `checkout.html`, and the email templates in `chip-callback.php`. |
 | ~~`domain.my`~~ / ~~`og-image.jpg`~~ | — | **Done.** `index.html`/`index-b.html` canonical, `og:*` and `twitter:*` tags now point to `https://coachcem.com/1hari1/`, and `og-image.jpg` (1200×630, generated from the brand system + ebook cover) is deployed alongside the site. If the domain or `/1hari1` path ever changes, update these tags to match. |
 | `TESTIMONI` block | `index.html` (commented out, near the bottom) | Real customer testimonials only — uncomment and fill in once you have genuine quotes. Do not fabricate names, quotes, buyer counts, or before/after results. |
 | GA4 tracking code | `<head>` comment block in `index.html` and `terima-kasih.html` | Real GA4 measurement ID + snippet, if you want analytics |
