@@ -13,4 +13,5 @@ deployment:
     - /bin/cp -R checkout.html $DEPLOYPATH
     - /bin/cp -R create-purchase.php $DEPLOYPATH
     - /bin/cp -R chip-callback.php $DEPLOYPATH
+    - /bin/cp -R fnb-webhook-proxy.php $DEPLOYPATH
     - /bin/cp -R .htaccess $DEPLOYPATH
