@@ -59,21 +59,28 @@ input[aria-invalid=true]{border-color:var(--otot-text);border-width:2px;backgrou
 .lede{color:var(--slate);font-size:1rem}
 .band--dark .lede{color:var(--mist)}
 
-.checkout-grid{display:flex;flex-direction:column-reverse;gap:32px}
+.checkout-grid{max-width:640px;margin:0 auto}
 .buyer-col{width:100%}
-.summary-col{width:100%}
 
-.summary-card{background:var(--ink);color:var(--paper);border-radius:10px;padding:24px;position:relative}
+.summary-card{background:var(--ink);color:var(--paper);border-radius:10px;padding:18px 18px 16px;position:relative;margin:0 0 18px}
 .summary-card .eyebrow{color:var(--volt)}
-.summary-card h2{font-size:1.15rem;margin-bottom:16px}
 .line-item{display:flex;justify-content:space-between;align-items:baseline;gap:12px;padding:10px 0;border-top:1px solid #2A2A2D;font-size:1rem}
 .line-item:first-of-type{border-top:0}
 .line-item .name{color:var(--paper)}
 .line-item .price{font-family:'IBM Plex Mono',monospace;font-weight:600;white-space:nowrap;text-align:right}
 .line-item .was{display:block;font-weight:400;font-size:.875rem;color:var(--mist)}
-.total-row{display:flex;justify-content:space-between;align-items:baseline;margin-top:16px;padding-top:16px;border-top:1px solid #2A2A2D}
+.total-row{display:flex;justify-content:space-between;align-items:baseline;margin-top:8px;padding-top:12px;border-top:1px solid #2A2A2D}
 .total-row .label{font-weight:700;font-family:'Archivo','Arial Black',Arial,sans-serif;text-transform:uppercase;font-size:1rem}
-.total-row .amount{font-family:'Archivo','Arial Black',Arial,sans-serif;font-weight:900;font-size:1.8rem;color:var(--volt)}
+.total-row .amount{font-family:'Archivo','Arial Black',Arial,sans-serif;font-weight:900;font-size:1.6rem;color:var(--volt)}
+.sum-bar{position:fixed;left:0;right:0;bottom:0;z-index:40;background:#0B0B0C;box-shadow:0 -6px 18px rgba(0,0,0,.25);color:var(--paper);border-top:2px solid var(--volt);padding:10px max(16px,env(safe-area-inset-right)) calc(10px + env(safe-area-inset-bottom)) max(16px,env(safe-area-inset-left));transform:translateY(110%);visibility:hidden;transition:transform .2s ease,visibility .2s}
+.sum-bar.is-visible{transform:none;visibility:visible}
+.sum-bar-inner{max-width:640px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.sum-bar-items{display:flex;flex-direction:column;font-family:'IBM Plex Mono',monospace;font-size:.875rem;line-height:1.4;color:var(--mist);min-width:0}
+.sum-bar-items b{color:var(--paper);font-weight:600}
+.sum-bar-items s{color:#7D868E;margin-left:2px}
+.sum-bar-total{text-align:right;white-space:nowrap}
+.sum-bar-total span{display:block;font-family:'IBM Plex Mono',monospace;font-size:.875rem;color:var(--mist);text-transform:uppercase;letter-spacing:.06em}
+.sum-bar-total strong{font-family:'Archivo','Arial Black',Arial,sans-serif;font-weight:900;font-size:1.5rem;line-height:1.1;color:var(--volt)}
 
 /* ORDER BUMP — the whole header row is one big tap target */
 .bump{border:2px dashed var(--otot-text);border-radius:8px;margin:24px 0 8px;background:#FFF8DF;transition:background .15s,border-color .15s}
@@ -109,9 +116,6 @@ input[aria-invalid=true]{border-color:var(--otot-text);border-width:2px;backgrou
 noscript p{background:#FBE4E1;border:1px solid var(--otot-text);color:var(--otot-text);padding:14px;border-radius:6px}
 
 @media(min-width:760px){
-  .checkout-grid{flex-direction:row;align-items:flex-start}
-  .buyer-col{width:58%}
-  .summary-col{width:42%;position:sticky;top:24px}
 }
 @media (prefers-reduced-motion: reduce){
   *,*::before,*::after{animation-duration:.001ms !important;transition-duration:.001ms !important;scroll-behavior:auto !important}
@@ -183,6 +187,22 @@ noscript p{background:#FBE4E1;border:1px solid var(--otot-text);color:var(--otot
           </div>
           <p class="bump-note" id="bumpNote">Tak nak? Untick kotak ni — e-book RM47 kekal.</p>
 
+          <div class="summary-card" id="summaryCard">
+            <span class="eyebrow">Ringkasan Pesanan</span>
+            <div class="line-item">
+              <span class="name">PDF E-book &middot; 41 halaman</span>
+              <span class="price mono">RM47</span>
+            </div>
+            <div class="line-item" id="bumpLineItem">
+              <span class="name">Video Ebook: Camna Nak Bakar Lemak Kau!</span>
+              <span class="price mono">RM77<span class="was">(nilai RM129)</span></span>
+            </div>
+            <div class="total-row">
+              <span class="label">Jumlah</span>
+              <span class="amount mono" id="totalAmount" aria-live="polite">RM124</span>
+            </div>
+          </div>
+
           <figure class="pay-quote">
             <blockquote style="margin:0">"Ikutkan BMI sy dah dpt pegi ujian saringan SPP tu! Tq coach!"</blockquote>
             <cite>— Pembeli e-book, ahli komuniti Coach Cem</cite>
@@ -198,28 +218,21 @@ noscript p{background:#FBE4E1;border:1px solid var(--otot-text);color:var(--otot
         </form>
       </div>
 
-      <div class="summary-col">
-        <div class="summary-card">
-          <span class="eyebrow">Ringkasan Pesanan</span>
-          <h2>Cheat Code 1 Hari 1KG</h2>
-          <div class="line-item">
-            <span class="name">PDF E-book &middot; 41 halaman</span>
-            <span class="price mono">RM47</span>
-          </div>
-          <div class="line-item" id="bumpLineItem">
-            <span class="name">Video Ebook: Camna Nak Bakar Lemak Kau!</span>
-            <span class="price mono">RM77<span class="was">(nilai RM129)</span></span>
-          </div>
-          <div class="total-row">
-            <span class="label">Jumlah</span>
-            <span class="amount mono" id="totalAmount" aria-live="polite">RM124</span>
-          </div>
-        </div>
-      </div>
     </div>
   </div>
 </section>
 </main>
+
+<!-- Floating order summary: appears once the add-on is in view, hides when the full summary/pay button is on screen. -->
+<div class="sum-bar" id="sumBar" aria-hidden="true">
+  <div class="sum-bar-inner">
+    <div class="sum-bar-items">
+      <span>E-book <b>RM47</b></span>
+      <span id="sumBarBump">+ Video <b>RM77</b> <s>RM129</s></span>
+    </div>
+    <div class="sum-bar-total"><span>Jumlah</span> <strong id="sumBarTotal">RM124</strong></div>
+  </div>
+</div>
 
 <script>
 (function(){
@@ -239,6 +252,10 @@ noscript p{background:#FBE4E1;border:1px solid var(--otot-text);color:var(--otot
   var payLabel = document.getElementById("payLabel");
   var formError = document.getElementById("formError");
   var form = document.getElementById("checkoutForm");
+  var summaryCard = document.getElementById("summaryCard");
+  var sumBar = document.getElementById("sumBar");
+  var sumBarTotal = document.getElementById("sumBarTotal");
+  var sumBarBump = document.getElementById("sumBarBump");
   var submitting = false;
 
   function currentTotal(){
@@ -252,10 +269,29 @@ noscript p{background:#FBE4E1;border:1px solid var(--otot-text);color:var(--otot
     bumpState.textContent = bumpCheckbox.checked ? "✓ Ditambah ke pesanan" : "Tidak ditambah — tanda kotak untuk tambah";
     totalAmount.textContent = "RM" + total;
     payAmount.textContent = "RM" + total;
+    sumBarTotal.textContent = "RM" + total;
+    sumBarBump.style.display = bumpCheckbox.checked ? "" : "none";
   }
 
   bumpCheckbox.addEventListener("change", updateTotals);
   updateTotals();
+
+  // Show the floating summary only once the buyer has scrolled down to the add-on, and only
+  // until the full summary card (with the pay button right under it) scrolls into view.
+  var barShown = false, barTicking = false;
+  function updateBar(){
+    barTicking = false;
+    var vh = window.innerHeight || document.documentElement.clientHeight;
+    var scrolled = (window.pageYOffset || document.documentElement.scrollTop) > 80;
+    var show = scrolled && bumpBox.getBoundingClientRect().top < vh && summaryCard.getBoundingClientRect().top > vh - sumBar.offsetHeight;
+    if (show === barShown) return;
+    barShown = show;
+    sumBar.classList.toggle("is-visible", show);
+  }
+  function onBarScroll(){ if (!barTicking) { barTicking = true; window.requestAnimationFrame(updateBar); } }
+  window.addEventListener("scroll", onBarScroll, { passive: true });
+  window.addEventListener("resize", onBarScroll, { passive: true });
+  updateBar();
 
   // ---- Validation (friendly, inline, Malay) ----
   var fields = {
