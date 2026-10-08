@@ -52,7 +52,7 @@ input[aria-invalid=true]{border-color:var(--otot-text);border-width:2px;backgrou
 .skip-link{position:absolute;left:8px;top:-60px;background:var(--volt);color:var(--ink);padding:12px 16px;z-index:100}
 .skip-link:focus{top:8px}
 :focus-visible{outline:3px solid var(--ink);outline-offset:3px;border-radius:2px}
-.band--dark :focus-visible,.summary-card :focus-visible{outline-color:var(--volt)}
+.band--dark :focus-visible,.pay-panel :focus-visible{outline-color:var(--volt)}
 .band{padding:40px max(20px,env(safe-area-inset-right)) 40px max(20px,env(safe-area-inset-left))}
 .band--dark{background:var(--ink);color:var(--paper)}
 .wrap{max-width:var(--maxw);margin:0 auto}
@@ -62,25 +62,6 @@ input[aria-invalid=true]{border-color:var(--otot-text);border-width:2px;backgrou
 .checkout-grid{max-width:640px;margin:0 auto}
 .buyer-col{width:100%}
 
-.summary-card{background:var(--ink);color:var(--paper);border-radius:10px;padding:18px 18px 16px;position:relative;margin:0 0 18px}
-.summary-card .eyebrow{color:var(--volt)}
-.line-item{display:flex;justify-content:space-between;align-items:baseline;gap:12px;padding:10px 0;border-top:1px solid #2A2A2D;font-size:1rem}
-.line-item:first-of-type{border-top:0}
-.line-item .name{color:var(--paper)}
-.line-item .price{font-family:'IBM Plex Mono',monospace;font-weight:600;white-space:nowrap;text-align:right}
-.line-item .was{display:block;font-weight:400;font-size:.875rem;color:var(--mist)}
-.total-row{display:flex;justify-content:space-between;align-items:baseline;margin-top:8px;padding-top:12px;border-top:1px solid #2A2A2D}
-.total-row .label{font-weight:700;font-family:'Archivo','Arial Black',Arial,sans-serif;text-transform:uppercase;font-size:1rem}
-.total-row .amount{font-family:'Archivo','Arial Black',Arial,sans-serif;font-weight:900;font-size:1.6rem;color:var(--volt)}
-.sum-bar{position:fixed;left:0;right:0;bottom:0;z-index:40;background:#0B0B0C;box-shadow:0 -6px 18px rgba(0,0,0,.25);color:var(--paper);border-top:2px solid var(--volt);padding:10px max(16px,env(safe-area-inset-right)) calc(10px + env(safe-area-inset-bottom)) max(16px,env(safe-area-inset-left));transform:translateY(110%);visibility:hidden;transition:transform .2s ease,visibility .2s}
-.sum-bar.is-visible{transform:none;visibility:visible}
-.sum-bar-inner{max-width:640px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:12px}
-.sum-bar-items{display:flex;flex-direction:column;font-family:'IBM Plex Mono',monospace;font-size:.875rem;line-height:1.4;color:var(--mist);min-width:0}
-.sum-bar-items b{color:var(--paper);font-weight:600}
-.sum-bar-items s{color:#7D868E;margin-left:2px}
-.sum-bar-total{text-align:right;white-space:nowrap}
-.sum-bar-total span{display:block;font-family:'IBM Plex Mono',monospace;font-size:.875rem;color:var(--mist);text-transform:uppercase;letter-spacing:.06em}
-.sum-bar-total strong{font-family:'Archivo','Arial Black',Arial,sans-serif;font-weight:900;font-size:1.5rem;line-height:1.1;color:var(--volt)}
 
 /* ORDER BUMP — the whole header row is one big tap target */
 .bump{border:2px dashed var(--otot-text);border-radius:8px;margin:24px 0 8px;background:#FFF8DF;transition:background .15s,border-color .15s}
@@ -96,23 +77,49 @@ input[aria-invalid=true]{border-color:var(--otot-text);border-width:2px;backgrou
 .bump li{margin-bottom:6px}
 .bump-note{font-size:.9375rem;color:var(--slate);margin:0 0 22px}
 
-.pay-quote{margin:0 0 14px;padding:12px 14px;border-left:4px solid var(--volt);background:#fff;border-radius:0 6px 6px 0;font-size:.9375rem;line-height:1.45}
-.pay-quote cite{display:block;font-style:normal;font-family:'IBM Plex Mono',monospace;font-size:.875rem;color:var(--slate);margin-top:4px}
 
+/* STICKY PAY PANEL (max ~30% of the viewport) */
+body.has-pay-panel{padding-bottom:var(--panel-h,0px)}
+html{scroll-padding-bottom:var(--panel-h,0px)}
+.pay-panel{position:fixed;left:0;right:0;bottom:0;z-index:40;background:#0B0B0C;color:var(--paper);border-top:2px solid var(--volt);box-shadow:0 -8px 24px rgba(0,0,0,.28);padding:10px max(14px,env(safe-area-inset-right)) calc(8px + env(safe-area-inset-bottom)) max(14px,env(safe-area-inset-left));transform:translateY(110%);visibility:hidden;transition:transform .2s ease,visibility .2s}
+.pay-panel.is-visible{transform:none;visibility:visible}
+.pay-panel-inner{max-width:640px;margin:0 auto;display:flex;flex-direction:column;gap:6px}
+.pp-summary{display:flex;align-items:flex-end;justify-content:space-between;gap:10px}
+.pp-items{display:flex;flex-direction:column;min-width:0;font-family:'IBM Plex Mono',monospace;font-size:.875rem;line-height:1.35;color:var(--mist)}
+.pp-label{color:var(--volt);text-transform:uppercase;letter-spacing:.08em;font-weight:600}
+.pp-items b{color:var(--paper);font-weight:600}
+.pp-items s{color:#7D868E}
+.pp-total{text-align:right;white-space:nowrap;line-height:1}
+.pp-total span{display:block;font-family:'IBM Plex Mono',monospace;font-size:.875rem;color:var(--mist);text-transform:uppercase;letter-spacing:.06em;margin-bottom:2px}
+.pp-total strong{font-family:'Archivo','Arial Black',Arial,sans-serif;font-weight:900;font-size:1.5rem;color:var(--volt)}
+.pp-quote{margin:0;font-size:.875rem;line-height:1.35;color:var(--paper);border-left:3px solid var(--volt);padding-left:8px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.pp-quote span{color:var(--mist)}
+.pay-panel .pay-button{min-height:50px;padding:12px;border-color:var(--volt)}
+.pp-trust,.pp-help{margin:0;text-align:center;font-size:.875rem;line-height:1.35;color:var(--mist)}
+.pp-trust span{display:inline-block}
+.pp-help a{color:var(--paper);display:inline-block;padding:2px 0}
+/* Short phones: one-line summary so the panel stays under 30% of the screen */
+@media (max-height:740px){
+  .pay-panel{padding-top:8px}
+  .pay-panel-inner{gap:5px}
+  .pp-summary{align-items:center}
+  .pp-label,.pp-items s,.pp-total span{display:none}
+  .pp-total strong{font-size:1.3rem}
+  .pay-panel{padding-bottom:calc(6px + env(safe-area-inset-bottom))}
+  .pay-panel-inner{gap:4px}
+  .pp-quote,.pp-trust,.pp-help{line-height:1.25}
+  .pay-panel .pay-button{min-height:44px;padding:9px}
+}
 .pay-button{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;min-height:58px;background:var(--volt);color:var(--ink);font-family:'IBM Plex Mono',monospace;font-weight:700;font-size:1.05rem;letter-spacing:.02em;text-transform:uppercase;padding:16px;border-radius:6px;border:2px solid var(--ink);cursor:pointer;text-align:center;touch-action:manipulation}
 @media (hover:hover){.pay-button:hover:not(:disabled){background:var(--ink);color:var(--volt);border-color:var(--volt)}}
 .pay-button:disabled{opacity:.75;cursor:wait}
 .spinner{width:18px;height:18px;border:3px solid currentColor;border-right-color:transparent;border-radius:50%;animation:spin .8s linear infinite;display:none}
 .pay-button.is-loading .spinner{display:inline-block}
 @keyframes spin{to{transform:rotate(360deg)}}
-.pay-note{font-family:'IBM Plex Mono',monospace;font-size:.875rem;color:var(--slate);text-align:center;margin:12px 0 4px}
-.pay-methods{font-family:'IBM Plex Mono',monospace;font-size:.875rem;color:var(--slate);text-align:center;margin:0}
 .form-error{background:#FBE4E1;border:1px solid var(--otot-text);color:#8E2B21;padding:12px 14px;border-radius:6px;font-size:1rem;margin-bottom:18px;display:none}
 .form-error.visible{display:block}
 .form-error a{font-weight:700}
 
-.trust-row{font-size:.9375rem;color:var(--slate);text-align:center;margin-top:16px}
-.trust-row a{display:inline-flex;align-items:center;min-height:44px}
 noscript p{background:#FBE4E1;border:1px solid var(--otot-text);color:var(--otot-text);padding:14px;border-radius:6px}
 
 @media(min-width:760px){
@@ -187,34 +194,6 @@ noscript p{background:#FBE4E1;border:1px solid var(--otot-text);color:var(--otot
           </div>
           <p class="bump-note" id="bumpNote">Tak nak? Untick kotak ni — e-book RM47 kekal.</p>
 
-          <div class="summary-card" id="summaryCard">
-            <span class="eyebrow">Ringkasan Pesanan</span>
-            <div class="line-item">
-              <span class="name">PDF E-book &middot; 41 halaman</span>
-              <span class="price mono">RM47</span>
-            </div>
-            <div class="line-item" id="bumpLineItem">
-              <span class="name">Video Ebook: Camna Nak Bakar Lemak Kau!</span>
-              <span class="price mono">RM77<span class="was">(nilai RM129)</span></span>
-            </div>
-            <div class="total-row">
-              <span class="label">Jumlah</span>
-              <span class="amount mono" id="totalAmount" aria-live="polite">RM124</span>
-            </div>
-          </div>
-
-          <figure class="pay-quote">
-            <blockquote style="margin:0">"Ikutkan BMI sy dah dpt pegi ujian saringan SPP tu! Tq coach!"</blockquote>
-            <cite>— Pembeli e-book, ahli komuniti Coach Cem</cite>
-          </figure>
-
-          <button type="submit" class="pay-button" id="payButton">
-            <span class="spinner" aria-hidden="true"></span>
-            <span id="payLabel">Bayar <span id="payAmount">RM124</span> Sekarang</span>
-          </button>
-          <p class="pay-note">&#128274; Pembayaran diproses selamat melalui CHIP</p>
-          <p class="pay-methods">FPX &middot; DuitNow QR &middot; Kad kredit/debit</p>
-          <p class="trust-row">Ada masalah semasa checkout?&nbsp;<a href="https://wa.me/60122541050">Hubungi kami di WhatsApp</a></p>
         </form>
       </div>
 
@@ -223,14 +202,24 @@ noscript p{background:#FBE4E1;border:1px solid var(--otot-text);color:var(--otot
 </section>
 </main>
 
-<!-- Floating order summary: appears once the add-on is in view, hides when the full summary/pay button is on screen. -->
-<div class="sum-bar" id="sumBar" aria-hidden="true">
-  <div class="sum-bar-inner">
-    <div class="sum-bar-items">
-      <span>E-book <b>RM47</b></span>
-      <span id="sumBarBump">+ Video <b>RM77</b> <s>RM129</s></span>
+<!-- STICKY PAY PANEL: order summary + testimonial + pay button + trust notes, fixed to the bottom.
+     Appears once the buyer scrolls or finishes a field, then stays; hides while the keyboard is up. -->
+<div class="pay-panel" id="payPanel" aria-label="Ringkasan pesanan dan bayaran">
+  <div class="pay-panel-inner">
+    <div class="pp-summary">
+      <div class="pp-items">
+        <span class="pp-label">Ringkasan pesanan</span>
+        <span>E-book <b>RM47</b><span id="bumpLineItem"> + Video <b>RM77</b> <s>RM129</s></span></span>
+      </div>
+      <div class="pp-total"><span>Jumlah</span><strong id="totalAmount" aria-live="polite">RM124</strong></div>
     </div>
-    <div class="sum-bar-total"><span>Jumlah</span> <strong id="sumBarTotal">RM124</strong></div>
+    <p class="pp-quote">"Ikutkan BMI sy dah dpt pegi ujian saringan SPP tu! Tq coach!" <span>— Pembeli e-book</span></p>
+    <button type="submit" form="checkoutForm" class="pay-button" id="payButton">
+      <span class="spinner" aria-hidden="true"></span>
+      <span id="payLabel">Bayar <span id="payAmount">RM124</span> Sekarang</span>
+    </button>
+    <p class="pp-trust"><span>&#128274; Pembayaran diproses selamat melalui CHIP</span> <span>FPX &middot; DuitNow QR &middot; Kad kredit/debit</span></p>
+    <p class="pp-help">Ada masalah? <a href="https://wa.me/60122541050">Hubungi kami di WhatsApp</a></p>
   </div>
 </div>
 
@@ -252,10 +241,7 @@ noscript p{background:#FBE4E1;border:1px solid var(--otot-text);color:var(--otot
   var payLabel = document.getElementById("payLabel");
   var formError = document.getElementById("formError");
   var form = document.getElementById("checkoutForm");
-  var summaryCard = document.getElementById("summaryCard");
-  var sumBar = document.getElementById("sumBar");
-  var sumBarTotal = document.getElementById("sumBarTotal");
-  var sumBarBump = document.getElementById("sumBarBump");
+  var payPanel = document.getElementById("payPanel");
   var submitting = false;
 
   function currentTotal(){
@@ -264,34 +250,39 @@ noscript p{background:#FBE4E1;border:1px solid var(--otot-text);color:var(--otot
 
   function updateTotals(){
     var total = currentTotal();
-    bumpLineItem.style.display = bumpCheckbox.checked ? "flex" : "none";
+    bumpLineItem.style.display = bumpCheckbox.checked ? "" : "none";
     bumpBox.classList.toggle("is-off", !bumpCheckbox.checked);
     bumpState.textContent = bumpCheckbox.checked ? "✓ Ditambah ke pesanan" : "Tidak ditambah — tanda kotak untuk tambah";
     totalAmount.textContent = "RM" + total;
     payAmount.textContent = "RM" + total;
-    sumBarTotal.textContent = "RM" + total;
-    sumBarBump.style.display = bumpCheckbox.checked ? "" : "none";
   }
 
   bumpCheckbox.addEventListener("change", updateTotals);
   updateTotals();
 
-  // Show the floating summary only once the buyer has scrolled down to the add-on, and only
-  // until the full summary card (with the pay button right under it) scrolls into view.
-  var barShown = false, barTicking = false;
-  function updateBar(){
-    barTicking = false;
-    var vh = window.innerHeight || document.documentElement.clientHeight;
-    var scrolled = (window.pageYOffset || document.documentElement.scrollTop) > 80;
-    var show = scrolled && bumpBox.getBoundingClientRect().top < vh && summaryCard.getBoundingClientRect().top > vh - sumBar.offsetHeight;
-    if (show === barShown) return;
-    barShown = show;
-    sumBar.classList.toggle("is-visible", show);
+  // Sticky pay panel: revealed once the buyer scrolls or completes a field, then it stays.
+  // While a text field is focused (phone keyboard up) it steps aside so the field stays visible.
+  var revealed = false, typing = false;
+  function syncPanel(){
+    var show = revealed && !typing;
+    payPanel.classList.toggle("is-visible", show);
+    document.body.classList.toggle("has-pay-panel", revealed);
+    document.documentElement.style.setProperty("--panel-h", payPanel.offsetHeight + "px");
   }
-  function onBarScroll(){ if (!barTicking) { barTicking = true; window.requestAnimationFrame(updateBar); } }
-  window.addEventListener("scroll", onBarScroll, { passive: true });
-  window.addEventListener("resize", onBarScroll, { passive: true });
-  updateBar();
+  function reveal(){ if (!revealed) { revealed = true; syncPanel(); } }
+  window.addEventListener("scroll", function(){
+    if ((window.pageYOffset || document.documentElement.scrollTop) > 40) reveal();
+  }, { passive: true });
+  window.addEventListener("resize", syncPanel, { passive: true });
+  form.addEventListener("focusin", function(e){
+    if (e.target.matches("input[type=text],input[type=email],input[type=tel]")) { typing = true; syncPanel(); }
+  });
+  form.addEventListener("focusout", function(){
+    typing = false;
+    window.setTimeout(function(){ reveal(); syncPanel(); }, 50);
+  });
+  bumpCheckbox.addEventListener("change", reveal);
+  syncPanel();
 
   // ---- Validation (friendly, inline, Malay) ----
   var fields = {
