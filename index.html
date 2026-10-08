@@ -115,7 +115,7 @@ img{max-width:100%}
 
 /* TESTIMONIALS */
 .t-list{display:grid;gap:14px;margin-top:24px}
-@media(min-width:700px){.t-list{grid-template-columns:1fr 1fr}}
+@media(min-width:700px){.t-list{display:block;columns:2;column-gap:14px}.t-list .t-card{break-inside:avoid;margin-bottom:14px}}
 .t-card{margin:0;background:#fff;border:2px solid var(--ink);border-radius:8px;padding:18px 18px 16px;display:flex;flex-direction:column;gap:12px}
 .band--dark .t-card{background:var(--ink-2);border-color:var(--line-dark)}
 .t-card blockquote{margin:0;font-size:1.0625rem;line-height:1.5}
@@ -124,7 +124,10 @@ img{max-width:100%}
 .t-card figcaption{font-family:'IBM Plex Mono',monospace;font-size:.875rem;color:var(--slate)}
 .band--dark .t-card figcaption{color:var(--mist)}
 .t-card figcaption strong{color:inherit;font-weight:600}
-.t-card img{width:100%;height:auto;border-radius:6px}
+.t-card img{display:block;width:100%;height:auto;border-radius:6px;background:#0B141A}
+.t-card--shot{background:var(--ink);border-color:var(--ink);padding:10px 10px 12px}
+.t-card--shot figcaption{color:var(--mist);padding:0 4px}
+.t-list{align-items:start}
 .t-card--pull{background:var(--volt);border-color:var(--ink)}
 .t-card--pull blockquote{font-family:'Archivo','Arial Black',Arial,sans-serif;font-weight:900;text-transform:uppercase;font-size:1.25rem;line-height:1.15;letter-spacing:-.01em}
 .t-card--pull blockquote::before{color:var(--ink)}
@@ -196,14 +199,15 @@ img{max-width:100%}
   ================================================================
   TESTIMONI — edit di sini sahaja (tak perlu sentuh markup).
   ----------------------------------------------------------------
-  quote    : wajib. Kekalkan ayat asal pembeli.
+  quote    : wajib. Ayat asal pembeli. Untuk screenshot, ini jadi alt text.
   name     : pilihan. Kosongkan ("") kalau belum dapat izin -> hanya label dipaparkan.
-  label    : keterangan ringkas di bawah nama.
-  image    : pilihan, untuk kemudian (URL gambar). Jangan guna screenshot WhatsApp,
-             nombor telefon, username atau gambar profil.
-  featured : true = dipaparkan di bawah hero dan dekat butang beli akhir.
-  style    : "pull" = kad petikan besar (tanpa nama/nombor).
-  Peraturan: tiada before/after, tiada gambar timbang, tiada "dijamin", tiada dakwaan perubatan.
+  label    : keterangan ringkas di bawah kad.
+  image    : pilihan. Screenshot WhatsApp (JPG) dalam folder testimoni/.
+             Nama, nombor telefon, username, gambar profil & nama group MESTI ditutup dulu.
+  webp     : pilihan. Versi WebP gambar yang sama (lebih ringan).
+  width/height : saiz asal gambar (elak layout lompat).
+  featured : true = kad teks di bawah hero dan dekat butang beli akhir.
+  style    : "pull" = kad petikan besar (teks sahaja).
   ================================================================
 */
 window.CC_TESTIMONIALS = [
@@ -214,28 +218,32 @@ window.CC_TESTIMONIALS = [
     label: "Pembeli e-book, ahli komuniti Coach Cem"
   },
   {
+    quote: "Hilang 1.1kg coach. Tp rasa melayang. / Sy 1.75 kg coach..dri 70 skng 68.25 / Saya turun 1.6kg / trun 1.7kg / Hari ni saya Turun 0.5 kg SBB semalam dah Turun 1.5kg..Thank you so much Ilmu Banyak membantu.",
+    image: "testimoni/testimoni-1.jpg", webp: "testimoni/testimoni-1.webp", width: 497, height: 783,
+    name: "",
+    label: "Perbualan dalam group komuniti Coach Cem"
+  },
+  {
     quote: "Cuma berapa jam je 2.5kg hilang. Berbaloi sngt belajar dgn couch. MasyaAllah Tabarakallah.",
+    image: "testimoni/testimoni-2.jpg", webp: "testimoni/testimoni-2.webp", width: 520, height: 204,
     name: "",
     label: "Pembeli e-book, ahli komuniti Coach Cem"
   },
   {
-    quote: "Hilang 1.1kg coach. Tp rasa melayang.",
+    quote: "Ikutkan BMI sy dah dpt pegi ujian saringan SPP tu. Tq coach! Tq for d ebook cheatcode tu jgk! Smoga coach murah rezki panjang umur dan diberkati selalu.",
+    image: "testimoni/testimoni-3.jpg", webp: "testimoni/testimoni-3.webp", width: 615, height: 288,
     name: "",
     label: "Pembeli e-book, ahli komuniti Coach Cem"
   },
   {
-    quote: "Sy 1.75kg coach.. dari 70 skrg 68.25.",
+    quote: "Salam coach. Coachhhh. Sy nak gtau ni. Sy tgh happyyy. Rasa nak nangissss.",
+    image: "testimoni/testimoni-5.jpg", webp: "testimoni/testimoni-5.webp", width: 609, height: 510,
     name: "",
-    label: "Pembeli e-book, ahli komuniti Coach Cem"
+    label: "Mesej pembeli kepada Coach Cem"
   },
   {
-    quote: "Hari ni saya turun 0.5kg. Semalam dah turun 1.5kg. Thank you so much, ilmu banyak membantu.",
-    name: "",
-    label: "Pembeli e-book, ahli komuniti Coach Cem"
-  },
-  {
-    style: "pull",
-    quote: "Pengorbanan yg berbaloi dan ternyata cheatcode tu benar.",
+    quote: "pengorbanan yg berbaloi dan ternyata cheatcode tu benar",
+    image: "testimoni/testimoni-4.jpg", webp: "testimoni/testimoni-4.webp", width: 372, height: 72,
     name: "",
     label: "Pembeli e-book, ahli komuniti Coach Cem"
   }
@@ -248,15 +256,26 @@ window.ccRenderTestimonials = function(target, mode){
   if (mode === "featured") items = items.slice(0, 1);
   items.forEach(function(t){
     var fig = document.createElement("figure");
-    fig.className = "t-card" + (t.style === "pull" ? " t-card--pull" : "");
+    fig.className = "t-card" + (t.style === "pull" ? " t-card--pull" : "") + (t.image ? " t-card--shot" : "");
     if (t.image) {
+      // Screenshot card: the image carries the quote, so the quote becomes alt text.
+      var pic = document.createElement("picture");
+      if (t.webp) {
+        var source = document.createElement("source");
+        source.srcset = t.webp; source.type = "image/webp";
+        pic.appendChild(source);
+      }
       var img = document.createElement("img");
-      img.src = t.image; img.alt = ""; img.loading = "lazy"; img.decoding = "async";
-      fig.appendChild(img);
+      img.src = t.image; img.alt = "Screenshot WhatsApp: " + t.quote;
+      img.loading = "lazy"; img.decoding = "async";
+      if (t.width && t.height) { img.width = t.width; img.height = t.height; }
+      pic.appendChild(img);
+      fig.appendChild(pic);
+    } else {
+      var q = document.createElement("blockquote");
+      q.textContent = t.quote;
+      fig.appendChild(q);
     }
-    var q = document.createElement("blockquote");
-    q.textContent = t.quote;
-    fig.appendChild(q);
     var cap = document.createElement("figcaption");
     if (t.name) {
       var strong = document.createElement("strong");

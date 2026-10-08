@@ -51,7 +51,7 @@ of the two) is the one to shrink or drop first.
 ## Revamp notes (Oct 2026)
 
 - **Headline:** one `<h1 id="hero-title">` in `index.html`; the previous headline is kept in an HTML comment right above it for a quick revert.
-- **Testimonials:** edit the `window.CC_TESTIMONIALS` array in the `<head>` of `index.html` (`quote`, optional `name`, `label`, optional `image`, `featured`, `style: "pull"`). Empty `name` shows only the label. The one-line quote above the pay button lives in `checkout.html`.
+- **Testimonials:** edit the `window.CC_TESTIMONIALS` array in the `<head>` of `index.html` (`quote`, optional `name`, `label`, optional `image`, `featured`, `style: "pull"`). Empty `name` shows only the label. The one-line quote above the pay button lives in `checkout.html`. Screenshot testimonials live in `testimoni/` (WebP + JPG) and are referenced via `image`/`webp`/`width`/`height`; names, phone numbers, usernames, profile photos and group names must be covered before adding one.
 - **UTMs:** every checkout link carries `data-checkout-link`; a small inline script appends the landing page's query string to it. UTMs are also captured server-side by `/build/assets/legacy-marketing-*.js` (coachcem-store).
 - **Tracking:** `/build/assets/legacy-marketing-*.js` is the only tracking loader (PageView, ViewContent, InitiateCheckout, Purchase). `checkout.html` adds a browser `AddPaymentInfo` on a validated submit. The hashed file name must match the coachcem-store build that is live.
 - **Images:** `ebook-cover.webp` / `coach-cem.webp` are served via `<picture>` with the JPGs as fallback.
