@@ -364,6 +364,16 @@ noscript p{background:#FBE4E1;border:1px solid var(--otot-text);color:var(--otot
         contents: contents,
         num_items: contents.length
       }, { eventID: eventId });
+      // Server (CAPI) copy with the same event ID, so Meta deduplicates. Fire-and-forget.
+      var configEl = document.getElementById("store-marketing");
+      var config = configEl ? JSON.parse(configEl.textContent) : {};
+      if (config.csrfToken && window.fetch) {
+        window.fetch("/tracking/legacy/add-payment-info", {
+          method: "POST", credentials: "same-origin", keepalive: true,
+          headers: { "Content-Type": "application/json", "Accept": "application/json", "X-CSRF-TOKEN": config.csrfToken },
+          body: JSON.stringify({ event_id: eventId, addon: bumpCheckbox.checked, email: fields.email.el.value.trim() })
+        }).catch(function(){});
+      }
     } catch (err) { /* Tracking must never block payment. */ }
   }
 
