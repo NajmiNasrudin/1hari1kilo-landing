@@ -1,4 +1,8 @@
 ---
+# The live create-purchase.php, chip-callback.php and fnb-webhook-proxy.php
+# carry server-side coachcem-store tracking hooks that are not in git.
+# They are deliberately NOT copied here, so a deploy can never overwrite
+# them. Change those files on the server directly (with a backup).
 deployment:
   tasks:
     - export DEPLOYPATH=/home/zjoawlrttx/coachcem.com/1hari1/
@@ -9,9 +13,10 @@ deployment:
     - /bin/cp -R terima-kasih.html $DEPLOYPATH
     - /bin/cp -R coach-cem.jpg $DEPLOYPATH
     - /bin/cp -R ebook-cover.jpg $DEPLOYPATH
+    - /bin/cp -R ebook-cover.webp $DEPLOYPATH
+    - /bin/cp -R coach-cem.webp $DEPLOYPATH
+    - /bin/mkdir -p ${DEPLOYPATH}testimoni
+    - /bin/cp -R testimoni/. ${DEPLOYPATH}testimoni/
     - /bin/cp -R og-image.jpg $DEPLOYPATH
     - /bin/cp -R checkout.html $DEPLOYPATH
-    - /bin/cp -R create-purchase.php $DEPLOYPATH
-    - /bin/cp -R chip-callback.php $DEPLOYPATH
-    - /bin/cp -R fnb-webhook-proxy.php $DEPLOYPATH
     - /bin/cp -R .htaccess $DEPLOYPATH

@@ -2,49 +2,62 @@
 <html lang="ms">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Checkout — Cheat Code 1 Hari 1KG</title>
 <meta name="description" content="Lengkapkan pembelian e-book Cheat Code 1 Hari 1KG oleh Coach Cem.">
 <link rel="canonical" href="https://coachcem.com/1hari1/checkout.html">
 <meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#0B0B0C">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%230B0B0C'/%3E%3Ctext x='16' y='22' font-family='Arial' font-weight='900' font-size='14' text-anchor='middle' fill='%23FFD200'%3E1KG%3C/text%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@900&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@900&family=IBM+Plex+Mono:wght@400;600;700&family=IBM+Plex+Sans:wght@400;600;700&display=swap" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@900&family=IBM+Plex+Mono:wght@400;600;700&family=IBM+Plex+Sans:wght@400;600;700&display=swap"></noscript>
 <!--
-  GA4 PLACEHOLDER — paste begin_checkout / purchase event snippet here if needed.
+  GA4 PLACEHOLDER — GA4 and Meta Pixel are loaded by /build/assets/legacy-marketing-*.js
+  (coachcem-store), including InitiateCheckout. Do not paste a second tag here.
 -->
 <style>
 :root{
   --ink:#0B0B0C;
   --paper:#EDEFF0;
   --volt:#FFD200;
-  --slate:#5A6570;
-  --mist:#A7B0B8;
+  --slate:#4F5963;
+  --mist:#B9C1C8;
   --otot:#E0483C;
   --otot-text:#B23A2E;
+  --ok:#1E7A46;
   --maxw:900px;
 }
 *,*::before,*::after{box-sizing:border-box}
 html{-webkit-text-size-adjust:100%}
-body{margin:0;background:var(--paper);color:var(--ink);font-family:'IBM Plex Sans',Arial,sans-serif;font-size:16px;line-height:1.55;-webkit-font-smoothing:antialiased}
-h1,h2{font-family:'Archivo',Arial,sans-serif;font-weight:900;text-transform:uppercase;letter-spacing:-0.02em;line-height:1.08;margin:0 0 12px}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:'IBM Plex Sans',Arial,sans-serif;font-size:16px;line-height:1.55;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+h1,h2{font-family:'Archivo','Arial Black',Arial,sans-serif;font-weight:900;text-transform:uppercase;letter-spacing:-0.02em;line-height:1.08;margin:0 0 12px}
 h1{font-size:clamp(1.6rem,6vw,2rem)}
 h2{font-size:1.2rem}
 p{margin:0 0 12px}
 a{color:inherit}
-label{display:block;font-weight:600;font-size:.9rem;margin-bottom:6px}
-input{width:100%;padding:14px;border:1px solid #C7CBCE;border-radius:6px;background:#fff;color:var(--ink);font-family:'IBM Plex Sans',Arial,sans-serif;font-size:1rem;margin-bottom:18px}
-input:focus{outline:3px solid var(--ink);outline-offset:2px;border-color:var(--ink)}
-input::placeholder{color:#9AA0A6}
+label{display:block;font-weight:600;font-size:1rem;margin-bottom:6px}
+.field{margin-bottom:18px}
+input[type=text],input[type=email],input[type=tel]{width:100%;min-height:52px;padding:14px;border:1px solid #9AA3AB;border-radius:6px;background:#fff;color:var(--ink);font-family:'IBM Plex Sans',Arial,sans-serif;font-size:1rem;-webkit-appearance:none;appearance:none}
+input:focus-visible{outline:3px solid var(--ink);outline-offset:2px;border-color:var(--ink)}
+input::placeholder{color:#6B747C}
+input[aria-invalid=true]{border-color:var(--otot-text);border-width:2px;background:#FFF7F6}
+.field-hint{font-size:.875rem;color:var(--slate);margin:6px 0 0}
+.field-error{font-size:.9375rem;color:var(--otot-text);font-weight:600;margin:6px 0 0}
+.field-error:empty{display:none}
 .mono{font-family:'IBM Plex Mono',monospace}
-.eyebrow{font-family:'IBM Plex Mono',monospace;font-size:.75rem;letter-spacing:.14em;text-transform:uppercase;color:var(--otot-text);font-weight:600;margin:0 0 10px;display:block}
+.eyebrow{font-family:'IBM Plex Mono',monospace;font-size:.875rem;letter-spacing:.12em;text-transform:uppercase;color:var(--otot-text);font-weight:600;margin:0 0 10px;display:block}
 .band--dark .eyebrow{color:var(--volt)}
-:focus{outline:3px solid var(--ink);outline-offset:3px;border-radius:2px}
-.band--dark :focus{outline-color:var(--volt)}
-.band{padding:40px 20px}
+.skip-link{position:absolute;left:8px;top:-60px;background:var(--volt);color:var(--ink);padding:12px 16px;z-index:100}
+.skip-link:focus{top:8px}
+:focus-visible{outline:3px solid var(--ink);outline-offset:3px;border-radius:2px}
+.band--dark :focus-visible,.summary-card :focus-visible{outline-color:var(--volt)}
+.band{padding:40px max(20px,env(safe-area-inset-right)) 40px max(20px,env(safe-area-inset-left))}
 .band--dark{background:var(--ink);color:var(--paper)}
 .wrap{max-width:var(--maxw);margin:0 auto}
 .lede{color:var(--slate);font-size:1rem}
+.band--dark .lede{color:var(--mist)}
 
 .checkout-grid{display:flex;flex-direction:column-reverse;gap:32px}
 .buyer-col{width:100%}
@@ -53,32 +66,46 @@ input::placeholder{color:#9AA0A6}
 .summary-card{background:var(--ink);color:var(--paper);border-radius:10px;padding:24px;position:relative}
 .summary-card .eyebrow{color:var(--volt)}
 .summary-card h2{font-size:1.15rem;margin-bottom:16px}
-.line-item{display:flex;justify-content:space-between;gap:12px;padding:10px 0;border-top:1px solid #2A2A2D;font-size:.95rem}
+.line-item{display:flex;justify-content:space-between;align-items:baseline;gap:12px;padding:10px 0;border-top:1px solid #2A2A2D;font-size:1rem}
 .line-item:first-of-type{border-top:0}
 .line-item .name{color:var(--paper)}
-.line-item .check{color:var(--volt);font-family:'IBM Plex Mono',monospace}
-.line-item .price{font-family:'IBM Plex Mono',monospace;font-weight:600;white-space:nowrap}
+.line-item .price{font-family:'IBM Plex Mono',monospace;font-weight:600;white-space:nowrap;text-align:right}
+.line-item .was{display:block;font-weight:400;font-size:.875rem;color:var(--mist)}
 .total-row{display:flex;justify-content:space-between;align-items:baseline;margin-top:16px;padding-top:16px;border-top:1px solid #2A2A2D}
-.total-row .label{font-weight:700;font-family:'Archivo',Arial,sans-serif;text-transform:uppercase;font-size:1rem}
-.total-row .amount{font-family:'Archivo',Arial,sans-serif;font-weight:900;font-size:1.8rem;color:var(--volt)}
+.total-row .label{font-weight:700;font-family:'Archivo','Arial Black',Arial,sans-serif;text-transform:uppercase;font-size:1rem}
+.total-row .amount{font-family:'Archivo','Arial Black',Arial,sans-serif;font-weight:900;font-size:1.8rem;color:var(--volt)}
 
-.bump{border:2px dashed var(--otot-text);border-radius:8px;padding:20px;margin:24px 0;background:#FFF8DF}
-.bump-head{display:flex;align-items:flex-start;gap:12px}
-.bump-check{width:22px;height:22px;flex-shrink:0;margin-top:2px}
-.bump-tag{display:inline-block;font-family:'IBM Plex Mono',monospace;font-size:.68rem;letter-spacing:.06em;text-transform:uppercase;background:var(--ink);color:var(--volt);padding:3px 9px;border-radius:20px;margin-bottom:8px}
-.bump-title{font-family:'Archivo',Arial,sans-serif;font-weight:900;text-transform:uppercase;font-size:1.05rem;line-height:1.15;margin-bottom:8px}
-.bump ul{margin:10px 0 12px;padding-left:20px;color:var(--slate);font-size:.92rem}
+/* ORDER BUMP — the whole header row is one big tap target */
+.bump{border:2px dashed var(--otot-text);border-radius:8px;margin:24px 0 8px;background:#FFF8DF;transition:background .15s,border-color .15s}
+.bump.is-off{background:#fff;border-color:#9AA3AB}
+.bump-toggle{display:flex;align-items:flex-start;gap:14px;padding:18px 18px 8px;margin:0;cursor:pointer;font-weight:400;-webkit-tap-highlight-color:rgba(0,0,0,.08)}
+.bump-check{width:28px;height:28px;flex-shrink:0;margin:2px 0 0;accent-color:var(--ink);cursor:pointer}
+.bump-tag{display:inline-block;font-family:'IBM Plex Mono',monospace;font-size:.875rem;letter-spacing:.04em;text-transform:uppercase;background:var(--ink);color:var(--volt);padding:4px 10px;border-radius:20px;margin-bottom:8px}
+.bump-title{display:block;font-family:'Archivo','Arial Black',Arial,sans-serif;font-weight:900;text-transform:uppercase;font-size:1.05rem;line-height:1.15;margin-bottom:6px}
+.bump-price{display:block;font-family:'IBM Plex Mono',monospace;font-weight:700;font-size:1rem}
+.bump-price s{font-weight:400;color:var(--slate);margin-right:6px}
+.bump-state{display:block;font-size:.9375rem;font-weight:600;margin-top:6px}
+.bump ul{margin:6px 18px 16px 60px;padding-left:18px;color:var(--slate);font-size:1rem}
 .bump li{margin-bottom:6px}
-.bump-price{font-family:'IBM Plex Mono',monospace;font-weight:700}
+.bump-note{font-size:.9375rem;color:var(--slate);margin:0 0 22px}
 
-.pay-button{display:block;width:100%;background:var(--volt);color:var(--ink);font-family:'IBM Plex Mono',monospace;font-weight:700;font-size:1.05rem;letter-spacing:.02em;text-transform:uppercase;padding:18px;border-radius:6px;border:2px solid var(--ink);cursor:pointer;text-align:center}
-.pay-button:hover{background:var(--ink);color:var(--volt);border-color:var(--volt)}
-.pay-button:disabled{opacity:.6;cursor:wait}
-.pay-note{font-family:'IBM Plex Mono',monospace;font-size:.75rem;color:var(--slate);text-align:center;margin-top:10px}
-.form-error{background:#FBE4E1;border:1px solid var(--otot-text);color:var(--otot-text);padding:12px 14px;border-radius:6px;font-size:.9rem;margin-bottom:18px;display:none}
+.pay-quote{margin:0 0 14px;padding:12px 14px;border-left:4px solid var(--volt);background:#fff;border-radius:0 6px 6px 0;font-size:.9375rem;line-height:1.45}
+.pay-quote cite{display:block;font-style:normal;font-family:'IBM Plex Mono',monospace;font-size:.875rem;color:var(--slate);margin-top:4px}
+
+.pay-button{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;min-height:58px;background:var(--volt);color:var(--ink);font-family:'IBM Plex Mono',monospace;font-weight:700;font-size:1.05rem;letter-spacing:.02em;text-transform:uppercase;padding:16px;border-radius:6px;border:2px solid var(--ink);cursor:pointer;text-align:center;touch-action:manipulation}
+@media (hover:hover){.pay-button:hover:not(:disabled){background:var(--ink);color:var(--volt);border-color:var(--volt)}}
+.pay-button:disabled{opacity:.75;cursor:wait}
+.spinner{width:18px;height:18px;border:3px solid currentColor;border-right-color:transparent;border-radius:50%;animation:spin .8s linear infinite;display:none}
+.pay-button.is-loading .spinner{display:inline-block}
+@keyframes spin{to{transform:rotate(360deg)}}
+.pay-note{font-family:'IBM Plex Mono',monospace;font-size:.875rem;color:var(--slate);text-align:center;margin:12px 0 4px}
+.pay-methods{font-family:'IBM Plex Mono',monospace;font-size:.875rem;color:var(--slate);text-align:center;margin:0}
+.form-error{background:#FBE4E1;border:1px solid var(--otot-text);color:#8E2B21;padding:12px 14px;border-radius:6px;font-size:1rem;margin-bottom:18px;display:none}
 .form-error.visible{display:block}
+.form-error a{font-weight:700}
 
-.trust-row{font-family:'IBM Plex Mono',monospace;font-size:.78rem;color:var(--slate);text-align:center;margin-top:16px}
+.trust-row{font-size:.9375rem;color:var(--slate);text-align:center;margin-top:16px}
+.trust-row a{display:inline-flex;align-items:center;min-height:44px}
 noscript p{background:#FBE4E1;border:1px solid var(--otot-text);color:var(--otot-text);padding:14px;border-radius:6px}
 
 @media(min-width:760px){
@@ -88,11 +115,13 @@ noscript p{background:#FBE4E1;border:1px solid var(--otot-text);color:var(--otot
 }
 @media (prefers-reduced-motion: reduce){
   *,*::before,*::after{animation-duration:.001ms !important;transition-duration:.001ms !important;scroll-behavior:auto !important}
+  .spinner{animation:none}
 }
 </style>
+<script type="module" src="/build/assets/legacy-marketing-DbJufSYN.js"></script>
 </head>
 <body>
-<a class="skip-link" href="#main" style="position:absolute;left:8px;top:-48px;background:var(--volt);color:var(--ink);padding:10px 16px">Langkau ke kandungan</a>
+<a class="skip-link" href="#main">Langkau ke kandungan</a>
 
 <section class="band band--dark">
   <div class="wrap">
@@ -114,37 +143,58 @@ noscript p{background:#FBE4E1;border:1px solid var(--otot-text);color:var(--otot
         <h2>Maklumat Pembeli</h2>
         <p class="lede">Isi maklumat anda untuk teruskan ke pembayaran.</p>
 
-        <div class="form-error" id="formError"></div>
+        <div class="form-error" id="formError" role="alert" tabindex="-1"></div>
 
         <form id="checkoutForm" novalidate>
-          <label for="fullName">Nama Penuh</label>
-          <input type="text" id="fullName" name="fullName" placeholder="Contoh: Siti binti Ahmad" autocomplete="name" required>
+          <div class="field">
+            <label for="fullName">Nama Penuh</label>
+            <input type="text" id="fullName" name="fullName" placeholder="Contoh: Siti binti Ahmad" autocomplete="name" autocapitalize="words" enterkeyhint="next" required aria-describedby="fullNameError">
+            <p class="field-error" id="fullNameError" aria-live="polite"></p>
+          </div>
 
-          <label for="email">Alamat Emel</label>
-          <input type="email" id="email" name="email" placeholder="emel@anda.com" autocomplete="email" required>
+          <div class="field">
+            <label for="email">Alamat Emel</label>
+            <input type="email" id="email" name="email" placeholder="emel@anda.com" autocomplete="email" inputmode="email" autocapitalize="off" autocorrect="off" spellcheck="false" enterkeyhint="next" required aria-describedby="emailHint emailError">
+            <p class="field-hint" id="emailHint">PDF akan dihantar ke emel ni.</p>
+            <p class="field-error" id="emailError" aria-live="polite"></p>
+          </div>
 
-          <label for="phone">Nombor Telefon</label>
-          <input type="tel" id="phone" name="phone" placeholder="01X-XXXXXXX" autocomplete="tel" required>
+          <div class="field">
+            <label for="phone">Nombor Telefon</label>
+            <input type="tel" id="phone" name="phone" placeholder="01X-XXXXXXX" autocomplete="tel" inputmode="tel" enterkeyhint="done" required aria-describedby="phoneError">
+            <p class="field-error" id="phoneError" aria-live="polite"></p>
+          </div>
 
-          <div class="bump">
-            <div class="bump-head">
-              <input type="checkbox" class="bump-check" id="videoBump" name="videoBump" checked>
-              <div>
-                <span class="bump-tag">&#9889; Add-On Eksklusif</span>
-                <p class="bump-title">Video Ebook: Camna Nak Bakar Lemak Kau!</p>
-              </div>
-            </div>
-            <ul>
-              <li>Video jalan kerja penuh Cheat Code 1 Hari 1KG, langkah demi langkah, terus di depan kamera.</li>
+          <div class="bump" id="bumpBox">
+            <label class="bump-toggle" for="videoBump">
+              <input type="checkbox" class="bump-check" id="videoBump" name="videoBump" checked aria-describedby="bumpPoints bumpNote">
+              <span>
+                <span class="bump-tag">&#9889; Tawaran Khas &middot; Jimat RM52</span>
+                <span class="bump-title">Video Ebook: Camna Nak Bakar Lemak Kau!</span>
+                <span class="bump-price"><s aria-label="Harga biasa RM129">RM129</s> RM77 sahaja</span>
+                <span class="bump-state" id="bumpState">&#10003; Ditambah ke pesanan</span>
+              </span>
+            </label>
+            <ul id="bumpPoints">
+              <li>Video penuh tentang cara bakar lemak, langkah demi langkah, terus di depan kamera. "Cheat Code 1 Hari 1KG" hanyalah satu topik daripada keseluruhan video ni.</li>
               <li>Cara tidur dengan betul supaya badan acik cukup rehat untuk sokong proses pemulihan.</li>
               <li>Contoh susunan menu &amp; tabiat harian yang acik boleh ikut terus.</li>
             </ul>
-            <span class="bump-price mono">+ RM77 sahaja</span>
           </div>
+          <p class="bump-note" id="bumpNote">Tak nak? Untick kotak ni — e-book RM47 kekal.</p>
 
-          <button type="submit" class="pay-button" id="payButton">Bayar <span id="payAmount">RM47</span> Sekarang</button>
+          <figure class="pay-quote">
+            <blockquote style="margin:0">"Ikutkan BMI sy dah dpt pegi ujian saringan SPP tu! Tq coach!"</blockquote>
+            <cite>— Pembeli e-book, ahli komuniti Coach Cem</cite>
+          </figure>
+
+          <button type="submit" class="pay-button" id="payButton">
+            <span class="spinner" aria-hidden="true"></span>
+            <span id="payLabel">Bayar <span id="payAmount">RM124</span> Sekarang</span>
+          </button>
           <p class="pay-note">&#128274; Pembayaran diproses selamat melalui CHIP</p>
-          <p class="trust-row">Ada masalah semasa checkout? <a href="https://wa.me/60122541050">Hubungi kami di WhatsApp</a></p>
+          <p class="pay-methods">FPX &middot; DuitNow QR &middot; Kad kredit/debit</p>
+          <p class="trust-row">Ada masalah semasa checkout?&nbsp;<a href="https://wa.me/60122541050">Hubungi kami di WhatsApp</a></p>
         </form>
       </div>
 
@@ -158,11 +208,11 @@ noscript p{background:#FBE4E1;border:1px solid var(--otot-text);color:var(--otot
           </div>
           <div class="line-item" id="bumpLineItem">
             <span class="name">Video Ebook: Camna Nak Bakar Lemak Kau!</span>
-            <span class="price mono">RM77</span>
+            <span class="price mono">RM77<span class="was">(nilai RM129)</span></span>
           </div>
           <div class="total-row">
             <span class="label">Jumlah</span>
-            <span class="amount mono" id="totalAmount">RM124</span>
+            <span class="amount mono" id="totalAmount" aria-live="polite">RM124</span>
           </div>
         </div>
       </div>
@@ -177,23 +227,29 @@ noscript p{background:#FBE4E1;border:1px solid var(--otot-text);color:var(--otot
 
   var EBOOK_PRICE = 47;
   var BUMP_PRICE = 77;
+  var WHATSAPP_URL = "https://wa.me/60122541050";
 
   var bumpCheckbox = document.getElementById("videoBump");
+  var bumpBox = document.getElementById("bumpBox");
+  var bumpState = document.getElementById("bumpState");
   var bumpLineItem = document.getElementById("bumpLineItem");
   var totalAmount = document.getElementById("totalAmount");
   var payAmount = document.getElementById("payAmount");
   var payButton = document.getElementById("payButton");
+  var payLabel = document.getElementById("payLabel");
   var formError = document.getElementById("formError");
   var form = document.getElementById("checkoutForm");
+  var submitting = false;
+
+  function currentTotal(){
+    return EBOOK_PRICE + (bumpCheckbox.checked ? BUMP_PRICE : 0);
+  }
 
   function updateTotals(){
-    var total = EBOOK_PRICE;
-    if(bumpCheckbox.checked){
-      total += BUMP_PRICE;
-      bumpLineItem.style.display = "flex";
-    } else {
-      bumpLineItem.style.display = "none";
-    }
+    var total = currentTotal();
+    bumpLineItem.style.display = bumpCheckbox.checked ? "flex" : "none";
+    bumpBox.classList.toggle("is-off", !bumpCheckbox.checked);
+    bumpState.textContent = bumpCheckbox.checked ? "✓ Ditambah ke pesanan" : "Tidak ditambah — tanda kotak untuk tambah";
     totalAmount.textContent = "RM" + total;
     payAmount.textContent = "RM" + total;
   }
@@ -201,34 +257,139 @@ noscript p{background:#FBE4E1;border:1px solid var(--otot-text);color:var(--otot
   bumpCheckbox.addEventListener("change", updateTotals);
   updateTotals();
 
+  // ---- Validation (friendly, inline, Malay) ----
+  var fields = {
+    fullName: {
+      el: document.getElementById("fullName"),
+      err: document.getElementById("fullNameError"),
+      check: function(v){
+        if (!v) return "Sila isi nama penuh acik.";
+        if (v.length < 2) return "Nama terlalu pendek. Sila isi nama penuh.";
+        return "";
+      }
+    },
+    email: {
+      el: document.getElementById("email"),
+      err: document.getElementById("emailError"),
+      check: function(v){
+        if (!v) return "Sila isi alamat emel. PDF akan dihantar ke sini.";
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v)) return "Emel macam tak lengkap. Contoh: nama@gmail.com";
+        return "";
+      }
+    },
+    phone: {
+      el: document.getElementById("phone"),
+      err: document.getElementById("phoneError"),
+      check: function(v){
+        if (!v) return "Sila isi nombor telefon.";
+        if (!/^[+\d\s\-().]+$/.test(v)) return "Nombor telefon hanya boleh ada nombor, +, ruang atau sengkang.";
+        // Accept +60 / 60 / 0 prefixes, spaces and dashes. Validation only; the value sent is unchanged.
+        var digits = v.replace(/\D/g, "");
+        if (digits.indexOf("60") === 0) digits = "0" + digits.slice(2);
+        else if (digits.charAt(0) !== "0") digits = "0" + digits;
+        if (!/^0\d{8,10}$/.test(digits)) return "Nombor telefon tak lengkap. Contoh: 012-3456789 atau +60 12-345 6789";
+        return "";
+      }
+    }
+  };
+
+  function validateField(name, show){
+    var f = fields[name];
+    var message = f.check(f.el.value.trim());
+    if (show || f.el.getAttribute("aria-invalid") === "true") {
+      f.err.textContent = message;
+      f.el.setAttribute("aria-invalid", message ? "true" : "false");
+    }
+    return !message;
+  }
+
+  Object.keys(fields).forEach(function(name){
+    var f = fields[name];
+    f.el.addEventListener("blur", function(){ if (f.el.value.trim()) validateField(name, true); });
+    f.el.addEventListener("input", function(){ validateField(name, false); });
+  });
+
+  // ---- Errors ----
   function showError(message){
-    formError.textContent = message;
+    formError.textContent = "";
+    formError.appendChild(document.createTextNode(message + " "));
+    var link = document.createElement("a");
+    link.href = WHATSAPP_URL;
+    link.textContent = "Perlukan bantuan? WhatsApp kami";
+    formError.appendChild(link);
     formError.className = "form-error visible";
+    formError.focus({ preventScroll: true });
+    formError.scrollIntoView({ block: "center", behavior: "smooth" });
   }
 
   function hideError(){
     formError.className = "form-error";
+    formError.textContent = "";
+  }
+
+  function setLoading(loading){
+    submitting = loading;
+    payButton.disabled = loading;
+    payButton.classList.toggle("is-loading", loading);
+    payButton.setAttribute("aria-busy", loading ? "true" : "false");
+    if (loading) {
+      payLabel.textContent = "Sedang diproses…";
+    } else {
+      payLabel.textContent = "Bayar ";
+      payLabel.appendChild(payAmount);
+      payLabel.appendChild(document.createTextNode(" Sekarang"));
+      updateTotals();
+    }
+  }
+
+  // ---- Meta AddPaymentInfo (additive; browser side) ----
+  // The Pixel SDK only exists when legacy-marketing.js initialised it, i.e. tracking is allowed.
+  // Same value/currency/contents shape as the InitiateCheckout sent by marketing.js.
+  function trackAddPaymentInfo(){
+    try {
+      if (typeof window.fbq !== "function") return;
+      if (/(?:^|;\s*)coachcem_tracking_choice=denied/.test(document.cookie)) return;
+      var contents = [{ id: "ebook-1hari1", quantity: 1, item_price: EBOOK_PRICE }];
+      if (bumpCheckbox.checked) contents.push({ id: "video-full-team-cc7", quantity: 1, item_price: BUMP_PRICE });
+      var rand = (window.crypto && window.crypto.getRandomValues)
+        ? Array.prototype.map.call(window.crypto.getRandomValues(new Uint8Array(8)), function(n){ return ("0" + n.toString(16)).slice(-2); }).join("")
+        : String(Math.random()).slice(2, 18);
+      var eventId = "addpaymentinfo_" + Date.now() + "_" + rand;
+      window.coachcemAddPaymentInfoEventId = eventId;
+      window.fbq("track", "AddPaymentInfo", {
+        currency: "MYR",
+        value: currentTotal(),
+        content_type: "product",
+        content_ids: contents.map(function(c){ return c.id; }),
+        contents: contents,
+        num_items: contents.length
+      }, { eventID: eventId });
+    } catch (err) { /* Tracking must never block payment. */ }
   }
 
   form.addEventListener("submit", function(e){
     e.preventDefault();
+    if (submitting) return;
     hideError();
 
-    var fullName = document.getElementById("fullName").value.trim();
-    var email = document.getElementById("email").value.trim();
-    var phone = document.getElementById("phone").value.trim();
+    var firstInvalid = null;
+    Object.keys(fields).forEach(function(name){
+      if (!validateField(name, true) && !firstInvalid) firstInvalid = fields[name].el;
+    });
+    if (firstInvalid) { firstInvalid.focus(); return; }
 
-    if(!fullName || !email || !phone){
-      showError("Sila lengkapkan semua maklumat sebelum teruskan.");
-      return;
-    }
+    var fullName = fields.fullName.el.value.trim();
+    var email = fields.email.el.value.trim();
+    var phone = fields.phone.el.value.trim();
 
-    payButton.disabled = true;
-    payButton.textContent = "Sedang Diproses...";
+    setLoading(true);
+    // Fired before the CHIP request so the beacon has time to leave before the redirect.
+    trackAddPaymentInfo();
 
     var xhr = new XMLHttpRequest();
     xhr.open("POST", "create-purchase.php", true);
     xhr.setRequestHeader("Content-Type", "application/json");
+    xhr.timeout = 30000;
     xhr.onload = function(){
       var response = {};
       try {
@@ -239,23 +400,29 @@ noscript p{background:#FBE4E1;border:1px solid var(--otot-text);color:var(--otot
       if(xhr.status >= 200 && xhr.status < 300 && response.checkout_url){
         window.location.href = response.checkout_url;
       } else {
-        payButton.disabled = false;
-        updateTotals();
-        showError(response.error || "Ralat tidak dijangka. Sila cuba lagi.");
+        setLoading(false);
+        showError(response.error || "Maaf, pembayaran tak dapat dimulakan sekarang. Sila cuba sekali lagi.");
       }
     };
     xhr.onerror = function(){
-      payButton.disabled = false;
-      updateTotals();
-      showError("Tidak dapat menghubungi server. Sila semak sambungan internet dan cuba lagi.");
+      setLoading(false);
+      showError("Tak dapat hubungi server. Sila semak sambungan internet dan cuba lagi.");
+    };
+    xhr.ontimeout = function(){
+      setLoading(false);
+      showError("Sambungan ambil masa terlalu lama. Sila cuba sekali lagi.");
     };
     xhr.send(JSON.stringify({
       full_name: fullName,
       email: email,
       phone: phone,
-      video_bump: bumpCheckbox.checked
+      video_bump: bumpCheckbox.checked,
+      marketing_context: window.coachcemCheckoutContext || ""
     }));
   });
+
+  // Back/forward cache (e.g. returning from CHIP): never leave a stuck loading button.
+  window.addEventListener("pageshow", function(ev){ if (ev.persisted) setLoading(false); });
 })();
 </script>
 
