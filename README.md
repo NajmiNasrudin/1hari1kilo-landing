@@ -55,7 +55,7 @@ of the two) is the one to shrink or drop first.
 - **UTMs:** every checkout link carries `data-checkout-link`; a small inline script appends the landing page's query string to it. UTMs are also captured server-side by `/build/assets/legacy-marketing-*.js` (coachcem-store).
 - **Tracking:** `/build/assets/legacy-marketing-*.js` is the only tracking loader (PageView, ViewContent, InitiateCheckout, Purchase). `checkout.html` adds a browser `AddPaymentInfo` on a validated submit. The hashed file name must match the coachcem-store build that is live.
 - **Images:** `ebook-cover.webp` / `coach-cem.webp` are served via `<picture>` with the JPGs as fallback.
-- ⚠️ **Server-side PHP differs from this repo.** The live `create-purchase.php` / `chip-callback.php` carry coachcem-store bridge hooks that are not in git. A full `.cpanel.yml` deploy copies the repo PHP over them. Deploy only the changed HTML/image files until the PHP here is synced with the server.
+- ⚠️ **Server-side PHP differs from this repo.** The live `create-purchase.php` / `chip-callback.php` / `fnb-webhook-proxy.php` carry coachcem-store tracking hooks that are not in git, so `.cpanel.yml` no longer copies any PHP. `index-b.html` and `terima-kasih.html` are synced with their live (patched) versions.
 
 ## ⚠️ Where does the ebook PDF go?
 
