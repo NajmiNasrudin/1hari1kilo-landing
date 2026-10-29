@@ -57,6 +57,17 @@ of the two) is the one to shrink or drop first.
 - **Images:** `ebook-cover.webp` / `coach-cem.webp` are served via `<picture>` with the JPGs as fallback.
 - ⚠️ **Server-side PHP differs from this repo.** The live `create-purchase.php` / `chip-callback.php` / `fnb-webhook-proxy.php` carry coachcem-store tracking hooks that are not in git, so `.cpanel.yml` no longer copies any PHP. `index-b.html` and `terima-kasih.html` are synced with their live (patched) versions.
 
+## Email delivery: Spacemail (Brevo removed, Oct 2026)
+
+Buyer and owner emails from `chip-callback.php` go through Spacemail via
+coachcem-store's mailer (`mail:send-legacy`, called through
+`coachcem_legacy_mail()` in `deploy/spaceship/legacy-bridge.php`). The live
+callback is patched by `tools/tukar-ke-spacemail.sh` (which runs
+`tools/betulkan-callback.sh`). After it, a failed buyer email is logged, is not
+marked in `sent-purchases.php`, and the callback answers 502 so CHIP retries.
+To resend one buyer's email: `bash tools/hantar-semula-emel.sh <CHIP purchase ID>`.
+The Brevo sections below describe the old setup.
+
 ## ⚠️ Where does the ebook PDF go?
 
 **Never upload the PDF into `public_html`.** Anything in `public_html` is

@@ -3,8 +3,9 @@
  * Resend the 1hari1 delivery email for one paid CHIP purchase.
  *
  * CLI only. Lives outside the web root on the server (~/bin/1hari1-resend-email.php)
- * and reuses the live 1hari1 config: chip-config.php, brevo-config.php and the
- * download links in chip-callback.php, so the email always carries the current links.
+ * and reuses the live 1hari1 config (chip-config.php and the download links in
+ * chip-callback.php). The email is sent through Spacemail via coachcem-store's mailer
+ * (coachcem_legacy_mail in legacy-bridge.php), the same path chip-callback.php uses.
  *
  *   php 1hari1-resend-email.php <purchase-id> [--dry-run] [--to=other@email.com]
  *
@@ -19,7 +20,7 @@ if (PHP_SAPI !== 'cli') {
 
 $dir = getenv('HARI1_DIR') ?: (getenv('HOME') . '/coachcem.com/1hari1');
 $chipApi = rtrim(getenv('CHIP_API_BASE') ?: 'https://gate.chip-in.asia/api/v1', '/');
-$brevoApi = getenv('BREVO_API_URL') ?: 'https://api.brevo.com/v3/smtp/email';
+$bridge = getenv('LEGACY_BRIDGE') ?: '/home/zjoawlrttx/coachcem-store/current/deploy/spaceship/legacy-bridge.php';
 $logFile = getenv('RESEND_LOG') ?: (getenv('HOME') . '/logs/1hari1-resend.log');
 $groupLink = 'https://chat.whatsapp.com/I7wCMU3Aing1Ui4tI9Dgn2';
 $videoBumpPrice = 7700;
@@ -78,15 +79,21 @@ if ($to !== null && !filter_var($to, FILTER_VALIDATE_EMAIL)) {
 }
 
 // ---- Live config ----
-foreach (array('chip-config.php', 'brevo-config.php', 'chip-callback.php') as $file) {
+foreach (array('chip-config.php', 'chip-callback.php') as $file) {
     if (!is_file("$dir/$file")) {
         fail("$file tiada dalam $dir");
     }
 }
 $chip = require "$dir/chip-config.php";
-$brevo = require "$dir/brevo-config.php";
-if (empty($chip['secret_key']) || empty($chip['brand_id']) || empty($brevo['api_key']) || empty($brevo['sender_email'])) {
-    fail('chip-config.php atau brevo-config.php tak lengkap.');
+if (empty($chip['secret_key']) || empty($chip['brand_id'])) {
+    fail('chip-config.php tak lengkap.');
+}
+if (!is_file($bridge)) {
+    fail("legacy-bridge.php tiada di $bridge");
+}
+require_once $bridge;
+if (!function_exists('coachcem_legacy_mail')) {
+    fail('coachcem_legacy_mail tiada dalam legacy-bridge.php. Deploy coachcem-store (mail:send-legacy) dulu.');
 }
 $callback = file_get_contents("$dir/chip-callback.php");
 $links = array();
@@ -162,23 +169,14 @@ if ($dryRun) {
     exit(0);
 }
 
-// ---- Send through Brevo ----
-$payload = json_encode(array(
-    'sender' => array('email' => $brevo['sender_email'], 'name' => $brevo['sender_name'] ?? 'Coach Cem'),
-    'to' => array(array('email' => $email, 'name' => $fullName !== '' ? $fullName : $email)),
-    'replyTo' => array('email' => $brevo['sender_email']),
-    'subject' => $subject,
-    'htmlContent' => $body,
-));
-list($status, $response, $error) = http('POST', $brevoApi, array('api-key: ' . $brevo['api_key'], 'Content-Type: application/json', 'Accept: application/json'), $payload);
-$result = json_decode($response, true);
+// ---- Send through Spacemail (coachcem-store mailer) ----
+$sentOk = coachcem_legacy_mail(array('to' => $email, 'name' => $fullName !== '' ? $fullName : $email, 'subject' => $subject, 'html' => $body));
 
 @mkdir(dirname($logFile), 0700, true);
-@file_put_contents($logFile, date('c') . " $purchaseId $reference brevo=$status\n", FILE_APPEND | LOCK_EX);
+@file_put_contents($logFile, date('c') . " $purchaseId $reference spacemail=" . ($sentOk ? 'ok' : 'fail') . "\n", FILE_APPEND | LOCK_EX);
 
-if ($status !== 201) {
-    $why = is_array($result) && isset($result['message']) ? $result['message'] : ($error !== '' ? $error : 'tiada butiran');
-    fail("Brevo tolak emel (HTTP $status): $why");
+if (!$sentOk) {
+    fail('Spacemail tak dapat hantar emel. Semak setting mail coachcem-store (MAIL_MAILER / MAIL_HOST).');
 }
 
 // Mark as sent so a later CHIP retry does not email the buyer twice.
@@ -192,4 +190,4 @@ if (!isset($sent[$purchaseId])) {
     file_put_contents($dedupe, "<?php\nreturn " . var_export($sent, true) . ";\n", LOCK_EX);
 }
 
-echo 'EMEL-DIHANTAR (Brevo messageId: ' . (is_array($result) && isset($result['messageId']) ? $result['messageId'] : '-') . ")\n";
+echo "EMEL-DIHANTAR (Spacemail)\n";

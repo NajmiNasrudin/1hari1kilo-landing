@@ -1,6 +1,7 @@
 #!/bin/bash
-# Betulkan chip-callback.php di server supaya emel pembeli yang gagal tak senyap:
-# log sebab Brevo gagal, jangan tanda "dah hantar", dan biar CHIP cuba semula.
+# Betulkan chip-callback.php di server: semua emel melalui Spacemail (tanpa Brevo),
+# dan emel pembeli yang gagal tak senyap: dicatat, tak ditanda "dah hantar", CHIP cuba semula.
+# Perlu coachcem-store dengan mail:send-legacy dah dipasang (tools/tukar-ke-spacemail.sh).
 # Backup dulu, semak sintaks PHP, tunjuk beza. Fail asal kekal kalau ada apa-apa masalah.
 set -euo pipefail
 
@@ -12,6 +13,10 @@ ssh coachcem bash -s <<'REMOTE'
 set -uo pipefail
 PHP=/opt/alt/php84/usr/bin/php; [ -x "$PHP" ] || PHP=php
 FILE=~/coachcem.com/1hari1/chip-callback.php
+BRIDGE=/home/zjoawlrttx/coachcem-store/current/deploy/spaceship/legacy-bridge.php
+if ! grep -q 'function coachcem_legacy_mail' "$BRIDGE" 2>/dev/null; then
+  echo "STOP: Spacemail (mail:send-legacy) belum dipasang dalam coachcem-store. Jalankan tools/tukar-ke-spacemail.sh dulu. Tiada apa diubah."; exit 1
+fi
 BACKUP=~/backups/1hari1-callback-$(date +%Y%m%d-%H%M%S)
 TMP=$(mktemp)
 
