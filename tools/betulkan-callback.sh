@@ -4,12 +4,14 @@
 # Perlu coachcem-store dengan mail:send-legacy dah dipasang (tools/tukar-ke-spacemail.sh).
 # Backup dulu, semak sintaks PHP, tunjuk beza. Fail asal kekal kalau ada apa-apa masalah.
 set -euo pipefail
+# One shared SSH connection for every step (the server limits rapid new connections).
+SSH_OPTS=(-o ControlMaster=auto -o ControlPath="$HOME/.ssh/cm-coachcem-%r@%h:%p" -o ControlPersist=120 -o ConnectTimeout=20 -o ServerAliveInterval=15)
 
 HERE="$(cd "$(dirname "$0")" && pwd)"
-ssh coachcem 'mkdir -p ~/bin && chmod 700 ~/bin'
-scp -q "$HERE/patch-callback.php" coachcem:bin/1hari1-patch-callback.php
+ssh "${SSH_OPTS[@]}" coachcem 'mkdir -p ~/bin && chmod 700 ~/bin'
+scp -q "${SSH_OPTS[@]}" "$HERE/patch-callback.php" coachcem:bin/1hari1-patch-callback.php
 
-ssh coachcem bash -s <<'REMOTE'
+ssh "${SSH_OPTS[@]}" coachcem bash -s <<'REMOTE'
 set -uo pipefail
 PHP=/opt/alt/php84/usr/bin/php; [ -x "$PHP" ] || PHP=php
 FILE=~/coachcem.com/1hari1/chip-callback.php

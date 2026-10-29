@@ -7,6 +7,8 @@
 # --dry-run : tunjuk siapa & apa yang akan dihantar, tanpa hantar.
 # --to=...  : hantar ke emel lain (contoh pembeli tersalah taip emel).
 set -euo pipefail
+# One shared SSH connection for every step (the server limits rapid new connections).
+SSH_OPTS=(-o ControlMaster=auto -o ControlPath="$HOME/.ssh/cm-coachcem-%r@%h:%p" -o ControlPersist=120 -o ConnectTimeout=20 -o ServerAliveInterval=15)
 
 ID="${1:-}"
 if ! [[ "$ID" =~ ^[a-fA-F0-9-]{36}$ ]]; then
@@ -23,6 +25,6 @@ for a in "$@"; do
 done
 
 HERE="$(cd "$(dirname "$0")" && pwd)"
-ssh coachcem 'mkdir -p ~/bin && chmod 700 ~/bin'
-scp -q "$HERE/resend-email.php" coachcem:bin/1hari1-resend-email.php
-ssh coachcem "chmod 600 ~/bin/1hari1-resend-email.php; PHP=/opt/alt/php84/usr/bin/php; [ -x \"\$PHP\" ] || PHP=php; \"\$PHP\" ~/bin/1hari1-resend-email.php ${ARGS[*]}"
+ssh "${SSH_OPTS[@]}" coachcem 'mkdir -p ~/bin && chmod 700 ~/bin'
+scp -q "${SSH_OPTS[@]}" "$HERE/resend-email.php" coachcem:bin/1hari1-resend-email.php
+ssh "${SSH_OPTS[@]}" coachcem "chmod 600 ~/bin/1hari1-resend-email.php; PHP=/opt/alt/php84/usr/bin/php; [ -x \"\$PHP\" ] || PHP=php; \"\$PHP\" ~/bin/1hari1-resend-email.php ${ARGS[*]}"
