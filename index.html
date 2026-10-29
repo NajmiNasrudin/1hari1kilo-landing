@@ -109,9 +109,32 @@ img{max-width:100%}
 .toc p{margin:0;color:var(--mist);font-size:1rem}
 
 /* VIDEO OFFER NOTE (secondary, not a section) */
-.offer-note{margin-top:24px;border:1px dashed #4A4A4F;border-radius:8px;padding:14px 16px;font-size:.9375rem;line-height:1.55;color:var(--mist)}
-.offer-note strong{color:var(--paper)}
-.offer-note .offer-tag{display:block;font-family:'IBM Plex Mono',monospace;font-size:.875rem;letter-spacing:.08em;text-transform:uppercase;color:var(--volt);margin-bottom:4px}
+
+/* E-BOOK vs VIDEO */
+.ev-grid{display:grid;gap:14px;margin-top:24px}
+@media(min-width:700px){.ev-grid{grid-template-columns:1fr 1fr}}
+.ev-card{background:#fff;border:2px solid var(--ink);border-radius:8px;padding:20px 18px}
+.ev-card--full{background:var(--ink);color:var(--paper);border-color:var(--volt)}
+.ev-tag{display:inline-block;font-family:'IBM Plex Mono',monospace;font-size:.875rem;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:var(--otot-text);margin-bottom:8px}
+.ev-card--full .ev-tag{color:var(--volt)}
+.ev-card h3{margin-bottom:8px}
+.ev-price{font-family:'IBM Plex Mono',monospace;font-weight:600;font-size:1.1rem;margin:0 0 12px}
+.ev-price s{font-weight:400;color:var(--mist);margin-left:4px}
+.ev-price span{font-weight:400;font-size:.875rem;color:var(--mist)}
+.ev-card ul{margin:0;padding-left:20px}
+.ev-card li{margin-bottom:8px}
+.ev-card--full li{color:var(--mist)}
+.ev-analogy{margin:20px 0 0;font-size:1.0625rem;border-left:4px solid var(--volt);padding-left:14px}
+.ev-bundle{margin-top:24px;display:flex;flex-direction:column;gap:14px;align-items:stretch;background:var(--volt);border:2px solid var(--ink);border-radius:8px;padding:18px}
+.ev-bundle-label{display:block;font-family:'IBM Plex Mono',monospace;font-weight:600;text-transform:uppercase;letter-spacing:.06em;font-size:.875rem}
+.ev-bundle-price{display:block;font-family:'Archivo','Arial Black',Arial,sans-serif;font-weight:900;font-size:2.4rem;line-height:1.05}
+.ev-bundle-note{display:block;font-family:'IBM Plex Mono',monospace;font-size:.875rem}
+.ev-bundle .cta-button{background:var(--ink);color:var(--volt);border-color:var(--ink)}
+@media(min-width:600px){.ev-bundle{flex-direction:row;align-items:center;justify-content:space-between}.ev-bundle .cta-button{width:auto}}
+.ev-optional{margin:14px 0 0;color:var(--slate);font-size:.9375rem}
+.ev-optional a{font-weight:600;color:var(--ink);white-space:nowrap}
+.final-alt{margin:10px 0 0;font-family:'IBM Plex Mono',monospace;font-size:.9375rem}
+.final-alt a{display:inline-flex;align-items:center;min-height:44px;color:var(--paper);text-decoration:underline;text-underline-offset:3px}
 
 /* TESTIMONIALS */
 .t-list{display:grid;gap:14px;margin-top:24px}
@@ -317,7 +340,7 @@ window.ccRenderTestimonials = function(target, mode){
 
     <div class="cta-row">
       <a class="cta-button" href="checkout.html" data-checkout-link>Dapatkan E-book — RM47</a>
-      <p class="cta-sub">Bayaran sekali &middot; PDF terus ke emel selepas bayar &middot; Ada tawaran video tambahan di checkout (pilihan).</p>
+      <p class="cta-sub">Bayaran sekali &middot; PDF terus ke emel selepas bayar &middot; Nak hasil kekal lebih lama? Tambah Video Ebook di checkout (pilihan).</p>
     </div>
   </div>
 </section>
@@ -376,10 +399,47 @@ window.ccRenderTestimonials = function(target, mode){
       <li><span class="num">02</span><p>Dapat terus meal plan percuma sebaik sahaja acik kira BMI.</p></li>
       <li><span class="num">03</span><p>Video resipi memasak untuk bantu acik amalkan apa yang dipelajari.</p></li>
     </ul>
-    <aside class="offer-note" aria-label="Tawaran khas di checkout">
-      <span class="offer-tag">Tawaran khas di checkout</span>
-      Nak faham lebih dalam? Di halaman checkout, acik boleh tambah <strong>Video Ebook: Camna Nak Bakar Lemak Kau!</strong> (nilai RM129) pada harga RM77 sahaja. Pilihan sepenuhnya di tangan acik.
-    </aside>
+  </div>
+</section>
+
+<!-- 5b. E-BOOK vs VIDEO (kenapa ambil sekali) -->
+<section class="band" id="ebook-video">
+  <div class="wrap">
+    <span class="eyebrow">E-book Je, Atau Sekali Dengan Video?</span>
+    <h2>E-book Bawa Acik Sampai. Video Bantu Acik Kekal.</h2>
+    <p class="lede"><em>Cheat Code 1 Hari 1KG</em> sebenarnya satu topik yang Coach Cem keluarkan daripada full course video <strong>Camna Nak Bakar Lemak Kau!</strong> E-book ni untuk kejar target dengan cepat. Video tu untuk lepas tu: supaya acik tahu macam mana nak jaga badan, dan hasil tu kekal lebih lama.</p>
+    <div class="ev-grid">
+      <div class="ev-card">
+        <span class="ev-tag">Capai target cepat</span>
+        <h3>E-book: Cheat Code 1 Hari 1KG</h3>
+        <p class="ev-price">RM47</p>
+        <ul>
+          <li>Satu topik: cheat code untuk hari-hari sebelum acik naik timbang.</li>
+          <li>Sesuai untuk dateline BMI yang dah dekat.</li>
+          <li>PDF 41 muka surat, terus ke emel.</li>
+        </ul>
+      </div>
+      <div class="ev-card ev-card--full">
+        <span class="ev-tag">Kekalkan hasil lebih lama &middot; Full course</span>
+        <h3>Video Ebook: Camna Nak Bakar Lemak Kau!</h3>
+        <p class="ev-price">+RM77 <s>RM129</s> <span>di checkout</span></p>
+        <ul>
+          <li>Full course cara bakar lemak, langkah demi langkah, terus di depan kamera.</li>
+          <li>Cara tidur dengan betul supaya badan acik cukup rehat untuk sokong proses pemulihan.</li>
+          <li>Contoh susunan menu &amp; tabiat harian yang acik boleh ikut terus.</li>
+        </ul>
+      </div>
+    </div>
+    <p class="ev-analogy">Senang cerita: e-book macam GPS, bawa acik sampai ke destinasi. Video tu macam belajar memandu, supaya lepas ni acik boleh jalan sendiri.</p>
+    <div class="ev-bundle">
+      <div>
+        <span class="ev-bundle-label">E-book + Video</span>
+        <span class="ev-bundle-price">RM124</span>
+        <span class="ev-bundle-note">Nilai RM176 &middot; Jimat RM52</span>
+      </div>
+      <a class="cta-button" href="checkout.html" data-checkout-link>Dapatkan E-book + Video</a>
+    </div>
+    <p class="ev-optional">Tak wajib. Kalau acik cuma nak kejar satu tarikh saringan, e-book sahaja pun dah boleh mula. <a href="checkout.html?pakej=ebook" data-checkout-link="ebook">Ambil e-book sahaja (RM47)</a></p>
   </div>
 </section>
 
@@ -415,15 +475,16 @@ window.ccRenderTestimonials = function(target, mode){
 <!-- 8. FINAL CTA -->
 <section class="band band--dark" id="beli-section">
   <div class="wrap">
-    <span class="eyebrow">Cheat Code 1 Hari 1KG</span>
+    <span class="eyebrow">Cheat Code 1 Hari 1KG + Video Ebook</span>
     <h2>Sedia Faham Nombor Acik Sendiri?</h2>
     <picture>
       <source srcset="ebook-cover.webp" type="image/webp">
       <img class="cover-shot" src="ebook-cover.jpg" alt="Muka depan e-book Cheat Code 1 Hari 1KG oleh Coach Cem" width="400" height="570" loading="lazy" decoding="async">
     </picture>
-    <p class="price-tag mono">RM47</p>
-    <p class="price-note">Bayaran sekali &middot; PDF 41 muka surat &middot; terus ke emel</p>
-    <a class="cta-button" href="checkout.html" data-checkout-link>Dapatkan E-book Sekarang</a>
+    <p class="price-tag mono">RM124</p>
+    <p class="price-note">E-book + Video Ebook &middot; nilai RM176 &middot; bayaran sekali &middot; terus ke emel</p>
+    <a class="cta-button" href="checkout.html" data-checkout-link>Dapatkan E-book + Video</a>
+    <p class="final-alt"><a href="checkout.html?pakej=ebook" data-checkout-link="ebook">Atau e-book sahaja &mdash; RM47</a></p>
     <div class="final-links">
       <a href="terma.html">Terma &amp; Dasar Bayaran Balik</a>
       <span>Ada soalan dulu?&nbsp;<a href="https://wa.me/60122541050">Tanya di WhatsApp</a></span>
@@ -484,8 +545,8 @@ window.ccRenderTestimonials = function(target, mode){
       <p>Tak perlu. Cukup baca, dan praktikkan apa yang difahami ikut situasi acik sendiri.</p>
     </details>
     <details>
-      <summary>Apa itu tawaran Video Ebook di checkout?</summary>
-      <p>Video penuh tentang cara bakar lemak, langkah demi langkah. "Cheat Code 1 Hari 1KG" hanyalah satu topik daripada keseluruhan video. Harga biasa RM129; semasa checkout acik boleh tambah pada RM77 sahaja, atau untick kalau tak nak.</p>
+      <summary>Perlu beli Video Ebook sekali ke?</summary>
+      <p>Tak wajib. E-book ni untuk capai target dengan cepat, satu topik iaitu cheat code. Video Ebook: Camna Nak Bakar Lemak Kau! pula full course yang cheat code tu diambil daripadanya, untuk bantu acik kekalkan hasil lebih lama. Harga biasa RM129; di checkout acik boleh tambah pada RM77 sahaja. Video tu dah ditanda di checkout, untick je kalau tak nak.</p>
     </details>
   </div>
 </section>
@@ -514,9 +575,12 @@ window.ccRenderTestimonials = function(target, mode){
 
   // Keep UTMs/fbclid on every checkout link. Hrefs are rewritten once here, so taps
   // navigate natively with no click handler in the way.
-  if (location.search) {
-    var links = document.querySelectorAll("a[data-checkout-link]");
-    for (var i = 0; i < links.length; i++) links[i].setAttribute("href", "checkout.html" + location.search);
+  var links = document.querySelectorAll("a[data-checkout-link]");
+  for (var i = 0; i < links.length; i++) {
+    var params = new URLSearchParams(location.search);
+    if (links[i].getAttribute("data-checkout-link") === "ebook") params.set("pakej", "ebook");
+    var query = params.toString();
+    links[i].setAttribute("href", "checkout.html" + (query ? "?" + query : ""));
   }
 
   var bar = document.getElementById("stickyCta");
