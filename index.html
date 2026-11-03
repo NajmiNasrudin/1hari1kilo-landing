@@ -120,7 +120,6 @@ img{max-width:100%}
   .hero-chip--a{left:-38%}
   .hero-chip--b{right:-26%}
 }
-}
 
 /* LISTS */
 .facts{list-style:none;margin:24px 0 0;padding:0;display:flex;flex-direction:column;gap:16px}
@@ -235,6 +234,88 @@ img{max-width:100%}
   .band{padding-top:88px;padding-bottom:88px}
   .band--tight{padding-top:0}
 }
+
+/* PAGE REFRESH (Nov 2026): the whole page follows the hero's look */
+:root{--card-r:16px;--paper-2:#F4F5F6;--card-shadow:0 1px 0 rgba(11,11,12,.04),0 8px 24px rgba(11,11,12,.06)}
+body{background:var(--paper-2)}
+h2{text-transform:none;letter-spacing:-.035em;line-height:1.05;font-size:clamp(1.95rem,7.8vw,2.9rem)}
+h3{text-transform:none;letter-spacing:-.02em;font-size:1.25rem;line-height:1.15}
+h2 .accent{background:var(--volt);color:var(--ink);padding:0 .12em;border-radius:.12em;-webkit-box-decoration-break:clone;box-decoration-break:clone}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;width:auto;font-family:'IBM Plex Sans',Arial,sans-serif;font-size:.875rem;font-weight:600;letter-spacing:0;text-transform:none;line-height:1.2;color:var(--ink);background:#fff;border:1px solid rgba(11,11,12,.1);border-radius:999px;padding:7px 12px 7px 10px;margin:0 0 16px;box-shadow:var(--card-shadow)}
+.eyebrow::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--volt);box-shadow:0 0 0 4px rgba(255,210,0,.25);flex-shrink:0}
+.band--dark .eyebrow{color:var(--paper);background:rgba(255,210,0,.08);border-color:rgba(255,210,0,.35);box-shadow:none}
+.band--dark:not(.hero){position:relative;isolation:isolate;overflow:hidden}
+.band--dark:not(.hero)::before{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;background:radial-gradient(55% 45% at 92% 0%,rgba(255,210,0,.12),transparent 70%)}
+.lede{max-width:40em}
+
+/* Buttons */
+.cta-button{border:0;border-radius:12px;gap:10px;min-height:58px;font-size:1.0625rem;box-shadow:0 10px 30px rgba(255,210,0,.25)}
+.cta-button::after{content:"\2192";transition:transform .15s}
+.band:not(.band--dark) .cta-button{box-shadow:0 10px 24px rgba(11,11,12,.14)}
+@media (hover:hover){
+  .cta-button:hover,.band:not(.band--dark) .cta-button:hover{background:#FFE14D;color:var(--ink);border:0}
+  .cta-button:hover::after{transform:translateX(4px)}
+}
+
+/* Lists become cards */
+.facts{display:grid;gap:10px}
+@media(min-width:700px){.facts{grid-template-columns:1fr 1fr}}
+.facts li{grid-template-columns:auto 1fr;align-items:center;gap:14px;background:#fff;border-radius:14px;padding:14px 16px;box-shadow:var(--card-shadow)}
+.facts .num,.toc .num{width:36px;height:36px;border-radius:10px;display:grid;place-items:center;font-size:.875rem}
+.facts .num{background:var(--volt);color:var(--ink)}
+.toc{border-top:0;display:grid;gap:10px}
+.toc li{grid-template-columns:auto 1fr;align-items:center;gap:14px;border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.03);border-radius:14px;padding:14px 16px}
+.toc .num{background:rgba(255,210,0,.12);color:var(--volt);border:1px solid rgba(255,210,0,.3)}
+.toc p{color:var(--paper)}
+
+/* E-book vs video */
+.ev-card{border:1px solid rgba(11,11,12,.08);border-radius:var(--card-r);padding:22px 20px;box-shadow:var(--card-shadow)}
+.ev-card--full{border:1px solid rgba(255,210,0,.55);box-shadow:0 20px 44px rgba(11,11,12,.22)}
+.ev-tag{display:inline-flex;font-family:'IBM Plex Sans',Arial,sans-serif;font-size:.8125rem;letter-spacing:0;text-transform:none;padding:4px 10px;border-radius:999px;background:rgba(178,58,46,.08);margin-bottom:10px}
+.ev-card--full .ev-tag{background:rgba(255,210,0,.12)}
+.ev-price{font-family:'Archivo','Arial Black',Arial,sans-serif;font-weight:900;font-size:1.5rem;letter-spacing:-.02em}
+.ev-price s,.ev-price span{font-family:'IBM Plex Sans',Arial,sans-serif}
+.ev-bundle{border:0;border-radius:20px;padding:22px;box-shadow:0 18px 44px rgba(255,210,0,.35)}
+.ev-bundle-label,.ev-bundle-note{font-family:'IBM Plex Sans',Arial,sans-serif;text-transform:none;letter-spacing:0}
+.ev-bundle-label{font-weight:700}
+.ev-bundle .cta-button{background:var(--ink);color:var(--volt);box-shadow:none}
+@media (hover:hover){.ev-bundle .cta-button:hover{background:#26262A;color:var(--volt)}}
+.ev-analogy{background:#fff;border-left:0;border-radius:14px;padding:16px 18px;box-shadow:var(--card-shadow);position:relative}
+.ev-analogy::before{content:"\1F4A1";margin-right:8px}
+
+/* Testimonials */
+.t-card{border:1px solid rgba(11,11,12,.08);border-radius:var(--card-r);box-shadow:var(--card-shadow)}
+.band--dark .t-card{background:rgba(255,255,255,.04);border-color:rgba(255,255,255,.08);box-shadow:none}
+.t-card figcaption{font-family:'IBM Plex Sans',Arial,sans-serif}
+.t-card--shot{background:var(--ink);border-color:var(--ink);padding:10px 10px 14px}
+.t-card img{border-radius:10px}
+.t-card--pull{background:var(--volt)}
+
+/* Author */
+.author>picture{flex:0 0 auto}
+.author-photo{border:0;border-radius:var(--card-r);box-shadow:0 18px 40px rgba(11,11,12,.18)}
+
+/* Final CTA */
+#beli-section::before{background:radial-gradient(55% 45% at 50% 28%,rgba(255,210,0,.18),transparent 70%)}
+.price-note,.final-links,.final-alt,.cta-sub{font-family:'IBM Plex Sans',Arial,sans-serif}
+.price-tag{font-size:4rem;letter-spacing:-.03em}
+.cover-shot{border-radius:10px;transform:rotate(-3deg);box-shadow:0 24px 48px rgba(0,0,0,.55),0 0 60px rgba(255,210,0,.18)}
+
+/* Before you continue */
+.warning{border:1px solid rgba(11,11,12,.08);background:#fff;border-radius:20px;padding:24px 22px;box-shadow:var(--card-shadow)}
+.warning h2{text-transform:none}
+.warning h3{font-family:'IBM Plex Sans',Arial,sans-serif;font-weight:700;font-size:1rem;letter-spacing:0;text-transform:none}
+.warning .fine{border-top-color:rgba(11,11,12,.08)}
+
+/* FAQ */
+.faq details{background:#fff;border:0;border-radius:14px;padding:0 18px;margin-bottom:10px;box-shadow:var(--card-shadow)}
+.faq summary{padding:18px 44px 18px 0}
+.faq summary::after{top:50%;right:0;transform:translateY(-50%);width:28px;height:28px;border-radius:50%;display:grid;place-items:center;background:var(--paper-2);font-family:'IBM Plex Sans',Arial,sans-serif}
+.faq details[open] summary::after{background:var(--volt)}
+
+/* Footer + sticky bar */
+.footer-links{font-family:'IBM Plex Sans',Arial,sans-serif}
+.sticky-cta{background:rgba(11,11,12,.9);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);border-top:1px solid rgba(255,210,0,.25)}
 
 @media (prefers-reduced-motion: reduce){
   *,*::before,*::after{animation-duration:.001ms !important;animation-iteration-count:1 !important;transition-duration:.001ms !important;scroll-behavior:auto !important}
@@ -361,7 +442,7 @@ window.ccRenderTestimonials = function(target, mode){
       <span class="hero-chip hero-chip--b" aria-hidden="true">&#9889; Terus ke emel</span>
     </div>
     <div class="hero-cta">
-      <a class="cta-button" href="checkout.html" data-checkout-link>Dapatkan E-book — RM47 <span class="arrow" aria-hidden="true">&rarr;</span></a>
+      <a class="cta-button" href="checkout.html" data-checkout-link>Dapatkan E-book — RM47</a>
       <ul class="hero-ticks">
         <li>Bayaran sekali</li>
         <li>PDF terus ke emel</li>
@@ -382,8 +463,8 @@ window.ccRenderTestimonials = function(target, mode){
 <!-- 3. SESUAI UNTUK (merged: dua senarai "untuk siapa" digabung jadi satu) -->
 <section class="band" id="sesuai-untuk">
   <div class="wrap">
-    <span class="eyebrow">Sesuai Untuk</span>
-    <h2>Cheatcode Hilangkan 1Hari 1KG</h2>
+    <span class="eyebrow">Sesuai untuk</span>
+    <h2>Cheatcode hilangkan <span class="accent">1 hari 1KG</span></h2>
     <p class="lede">Panduan pantas untuk acik-acik yang terikat dengan tuntutan BMI:</p>
     <ul class="facts">
       <li><span class="num mono">01</span><span>Dateline ujian saringan BMI (SPP, Kastam, RELA, Bomba dan sebagainya).</span></li>
@@ -400,8 +481,8 @@ window.ccRenderTestimonials = function(target, mode){
 <!-- 4. DALAM E-BOOK NI -->
 <section class="band band--dark">
   <div class="wrap">
-    <span class="eyebrow">Dalam E-book Ni</span>
-    <h2>Apa Yang Acik Akan Faham Lepas Baca</h2>
+    <span class="eyebrow">Dalam e-book ni</span>
+    <h2>Apa yang acik akan <span class="accent">faham</span> lepas baca</h2>
     <ul class="toc">
       <li><span class="num">01</span><p>Beza antara acik hilang berat &amp; hilang lemak.</p></li>
       <li><span class="num">02</span><p>Air, otot &amp; lemak — beza yang acik perlu faham sebelum mula "diet".</p></li>
@@ -418,8 +499,8 @@ window.ccRenderTestimonials = function(target, mode){
 <!-- 5. BONUS -->
 <section class="band band--dark band--tight">
   <div class="wrap">
-    <span class="eyebrow">Bonus Eksklusif</span>
-    <h2>Ebook Ni Ada 3 Bonus</h2>
+    <span class="eyebrow">Bonus eksklusif</span>
+    <h2>E-book ni ada <span class="accent">3 bonus</span></h2>
     <ul class="toc">
       <li><span class="num">01</span><p>Kira BMI — kira index jisim badan acik dengan tepat, terus dalam e-book.</p></li>
       <li><span class="num">02</span><p>Dapat terus meal plan percuma sebaik sahaja acik kira BMI.</p></li>
@@ -431,8 +512,8 @@ window.ccRenderTestimonials = function(target, mode){
 <!-- 5b. E-BOOK vs VIDEO (kenapa ambil sekali) -->
 <section class="band" id="ebook-video">
   <div class="wrap">
-    <span class="eyebrow">E-book Je, Atau Sekali Dengan Video?</span>
-    <h2>E-book Bawa Acik Sampai. Video Bantu Acik Kekal.</h2>
+    <span class="eyebrow">E-book je, atau sekali dengan video?</span>
+    <h2>E-book bawa acik sampai. Video bantu acik <span class="accent">kekal</span>.</h2>
     <p class="lede"><em>Cheat Code 1 Hari 1KG</em> sebenarnya satu topik yang Coach Cem keluarkan daripada full course video <strong>Camna Nak Bakar Lemak Kau!</strong> E-book ni untuk kejar target dengan cepat. Video tu untuk lepas tu: supaya acik tahu macam mana nak jaga badan, dan hasil tu kekal lebih lama.</p>
     <div class="ev-grid">
       <div class="ev-card">
@@ -472,8 +553,8 @@ window.ccRenderTestimonials = function(target, mode){
 <!-- 6. APA KATA PEMBELI -->
 <section class="band" id="testimoni">
   <div class="wrap">
-    <span class="eyebrow">Apa Kata Pembeli</span>
-    <h2>Dari Komuniti Coach Cem</h2>
+    <span class="eyebrow">Apa kata pembeli</span>
+    <h2>Dari komuniti <span class="accent">Coach Cem</span></h2>
     <div class="t-list" id="tList"></div>
     <script>ccRenderTestimonials(document.getElementById("tList"), "list");</script>
     <p class="t-disclaimer">Hasil berbeza-beza bergantung pada usaha dan keadaan individu. E-book ini tidak menjamin penurunan berat atau lemak badan.</p>
@@ -487,7 +568,7 @@ window.ccRenderTestimonials = function(target, mode){
 <section class="band band--tight">
   <div class="wrap">
     <span class="eyebrow">Siapa Coach Cem</span>
-    <h2>Ditulis Oleh Coach Cem</h2>
+    <h2>Ditulis oleh <span class="accent">Coach Cem</span></h2>
     <div class="author">
       <picture>
         <source srcset="coach-cem.webp" type="image/webp">
@@ -502,7 +583,7 @@ window.ccRenderTestimonials = function(target, mode){
 <section class="band band--dark" id="beli-section">
   <div class="wrap">
     <span class="eyebrow">Cheat Code 1 Hari 1KG + Video Ebook</span>
-    <h2>Sedia Faham Nombor Acik Sendiri?</h2>
+    <h2>Sedia faham <span class="accent">nombor</span> acik sendiri?</h2>
     <picture>
       <source srcset="ebook-cover.webp" type="image/webp">
       <img class="cover-shot" src="ebook-cover.jpg" alt="Muka depan e-book Cheat Code 1 Hari 1KG oleh Coach Cem" width="400" height="570" loading="lazy" decoding="async">
@@ -523,9 +604,9 @@ window.ccRenderTestimonials = function(target, mode){
 <!-- 9. SEBELUM ACIK TERUSKAN (teks asal dikekalkan, dipadatkan) -->
 <section class="band" id="sebelum-teruskan">
   <div class="wrap">
-    <span class="eyebrow">Sebelum Acik Teruskan</span>
+    <span class="eyebrow">Sebelum acik teruskan</span>
     <div class="warning">
-      <h2>E-book Ni Sesuai Untuk Siapa</h2>
+      <h2>E-book ni sesuai untuk siapa</h2>
       <div class="warning-grid">
         <div>
           <h3>Sesuai untuk</h3>
@@ -548,8 +629,8 @@ window.ccRenderTestimonials = function(target, mode){
 <!-- 10. FAQ -->
 <section class="band band--tight faq">
   <div class="wrap">
-    <span class="eyebrow">Soalan Lazim</span>
-    <h2>Sebelum Acik Tanya</h2>
+    <span class="eyebrow">Soalan lazim</span>
+    <h2>Sebelum acik <span class="accent">tanya</span></h2>
     <details>
       <summary>E-book ni dalam bentuk apa?</summary>
       <p>Fail PDF, 41 muka surat, boleh dibaca terus dalam telefon atau tablet acik.</p>
