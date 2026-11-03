@@ -82,21 +82,44 @@ img{max-width:100%}
 .cta-row--center{text-align:center}
 @media(max-width:599px){.cta-button{width:100%}}
 
-/* HERO */
-.hero{padding-top:28px;text-align:center}
-.hero .cta-row{margin-top:24px}
-.hero-brand{font-family:'IBM Plex Mono',monospace;font-size:.875rem;letter-spacing:.1em;color:var(--mist);margin-bottom:16px}
-.hero-brand strong{color:var(--volt)}
-.hero h1{margin-bottom:16px}
-.hero h1 .accent{color:var(--volt)}
-.hero-top{display:flex;flex-direction:column;gap:18px}
-.hero-copy{width:100%;min-width:0}
-.hero-cover{width:168px;height:auto;aspect-ratio:400/570;display:block;margin:0 auto;border-radius:6px;box-shadow:0 16px 32px rgba(0,0,0,.5);transform:rotate(-2deg);flex-shrink:0}
-@media(min-width:600px){
-  .hero{text-align:left}
-  .hero-top{flex-direction:row;align-items:center;gap:40px}
-  .hero-copy{flex:1}
-  .hero-cover{width:300px;margin:0}
+/* HERO (refreshed Nov 2026) */
+.hero{position:relative;overflow:hidden;padding-top:24px;padding-bottom:48px;text-align:left;isolation:isolate}
+.hero::before{content:"";position:absolute;inset:0;z-index:-2;background:
+  radial-gradient(60% 45% at 85% 18%,rgba(255,210,0,.20),transparent 70%),
+  radial-gradient(50% 40% at 0% 100%,rgba(255,210,0,.08),transparent 70%)}
+.hero::after{content:"";position:absolute;inset:0;z-index:-1;opacity:.35;
+  background-image:linear-gradient(rgba(255,255,255,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.05) 1px,transparent 1px);
+  background-size:32px 32px;-webkit-mask-image:radial-gradient(80% 70% at 50% 20%,#000,transparent);mask-image:radial-gradient(80% 70% at 50% 20%,#000,transparent)}
+.hero-grid{display:grid;grid-template-columns:1fr;grid-template-areas:"copy" "visual" "cta";gap:22px;align-items:center}
+.hero-copy{grid-area:copy;min-width:0}
+.hero-visual{grid-area:visual;position:relative;justify-self:center;width:184px}
+.hero-cta{grid-area:cta}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;margin:0 0 18px;padding:7px 12px 7px 10px;border:1px solid rgba(255,210,0,.35);border-radius:999px;background:rgba(255,210,0,.08);font-size:.875rem;font-weight:600;color:var(--paper);line-height:1.2}
+.hero-badge-dot{width:8px;height:8px;border-radius:50%;background:var(--volt);box-shadow:0 0 0 4px rgba(255,210,0,.18);flex-shrink:0}
+.hero h1{text-transform:none;letter-spacing:-.035em;line-height:1.02;font-size:clamp(2.35rem,10.5vw,3.9rem);margin:0 0 14px}
+.hero h1 .accent{color:var(--ink);background:var(--volt);padding:0 .14em;border-radius:.12em;-webkit-box-decoration-break:clone;box-decoration-break:clone}
+.hero .lede{font-size:1.0625rem;margin:0;max-width:34em}
+.hero-cover{width:100%;height:auto;aspect-ratio:400/570;display:block;border-radius:10px;transform:rotate(-3deg);box-shadow:0 24px 48px rgba(0,0,0,.55),0 0 0 1px rgba(255,255,255,.06)}
+.hero-visual::before{content:"";position:absolute;inset:12% -18% 6%;z-index:-1;background:radial-gradient(closest-side,rgba(255,210,0,.35),transparent);filter:blur(8px)}
+.hero-chip{position:absolute;display:inline-flex;align-items:center;gap:6px;padding:6px 10px;border-radius:999px;background:#fff;color:var(--ink);font-size:.8125rem;font-weight:700;white-space:nowrap;box-shadow:0 8px 20px rgba(0,0,0,.35)}
+.hero-chip--a{top:50%;left:-50%}
+.hero-chip--b{bottom:4%;right:-36%;background:var(--volt)}
+.hero .cta-button{width:100%;min-height:58px;border-radius:12px;border:0;gap:10px;font-size:1.0625rem;box-shadow:0 10px 30px rgba(255,210,0,.25)}
+.hero .cta-button .arrow{transition:transform .15s}
+@media (hover:hover){.hero .cta-button:hover{background:#FFE14D;color:var(--ink);border:0}.hero .cta-button:hover .arrow{transform:translateX(4px)}}
+.hero-ticks{list-style:none;margin:14px 0 0;padding:0;display:flex;flex-wrap:wrap;gap:6px 16px;font-size:.875rem;color:var(--mist)}
+.hero-ticks li{display:inline-flex;align-items:center;gap:6px}
+.hero-ticks li::before{content:"";width:16px;height:16px;border-radius:50%;flex-shrink:0;background:var(--volt) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M4 8.2l2.6 2.6L12 5.4' fill='none' stroke='%230B0B0C' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/100% no-repeat}
+@media(min-width:760px){
+  .hero .wrap{max-width:1040px}
+  .hero{padding-top:72px;padding-bottom:88px}
+  .hero-grid{grid-template-columns:1.25fr .9fr;grid-template-areas:"copy visual" "cta visual";column-gap:56px;row-gap:28px}
+  .hero-visual{width:290px}
+  .hero .cta-button{width:auto;padding:16px 30px}
+  .hero-chip{font-size:.875rem}
+  .hero-chip--a{left:-38%}
+  .hero-chip--b{right:-26%}
+}
 }
 
 /* LISTS */
@@ -321,26 +344,29 @@ window.ccRenderTestimonials = function(target, mode){
 
 <!-- 1. HERO -->
 <section class="band band--dark hero" id="hero" aria-labelledby="hero-title">
-  <div class="wrap">
-    <p class="hero-brand">COACH CEM &middot; <strong>TEAMCC7</strong></p>
-    <span class="eyebrow">E-book Digital &middot; 41 Muka Surat</span>
-
-    <div class="hero-top">
-      <div class="hero-copy">
-        <!-- HEADLINE: tukar di sini sahaja.
-             Lama (untuk revert): <h1 id="hero-title">Nak Turunkan <span class="accent">1KG Dalam 24 Jam?</span></h1> -->
-        <h1 id="hero-title">Ada Ujian Saringan <span class="accent">BMI Tak Lama Lagi?</span></h1>
-        <p class="lede">Faham beza air, otot &amp; lemak, dan apa yang boleh dibuat dalam 24 jam sebelum acik naik timbang. Bukan magic. Bukan ubat.</p>
-      </div>
+  <div class="wrap hero-grid">
+    <div class="hero-copy">
+      <p class="hero-badge"><span class="hero-badge-dot" aria-hidden="true"></span>E-book digital &middot; 41 muka surat &middot; Coach Cem</p>
+      <!-- HEADLINE: tukar di sini sahaja.
+           Lama (untuk revert): <h1 id="hero-title">Nak Turunkan <span class="accent">1KG Dalam 24 Jam?</span></h1> -->
+      <h1 id="hero-title">Ada ujian saringan <span class="accent">BMI</span> tak lama lagi?</h1>
+      <p class="lede">Faham beza air, otot &amp; lemak, dan apa yang boleh dibuat dalam 24 jam sebelum acik naik timbang. Bukan magic. Bukan ubat.</p>
+    </div>
+    <div class="hero-visual">
       <picture>
         <source srcset="ebook-cover.webp" type="image/webp">
         <img class="hero-cover" src="ebook-cover.jpg" alt="Muka depan e-book Cheat Code 1 Hari 1KG oleh Coach Cem" width="400" height="570" fetchpriority="high" decoding="async">
       </picture>
+      <span class="hero-chip hero-chip--a" aria-hidden="true">&#128196; PDF 41 muka surat</span>
+      <span class="hero-chip hero-chip--b" aria-hidden="true">&#9889; Terus ke emel</span>
     </div>
-
-    <div class="cta-row">
-      <a class="cta-button" href="checkout.html" data-checkout-link>Dapatkan E-book — RM47</a>
-      <p class="cta-sub">Bayaran sekali &middot; PDF terus ke emel &middot; Boleh tambah Video Ebook di checkout</p>
+    <div class="hero-cta">
+      <a class="cta-button" href="checkout.html" data-checkout-link>Dapatkan E-book — RM47 <span class="arrow" aria-hidden="true">&rarr;</span></a>
+      <ul class="hero-ticks">
+        <li>Bayaran sekali</li>
+        <li>PDF terus ke emel</li>
+        <li>Boleh tambah Video Ebook di checkout</li>
+      </ul>
     </div>
   </div>
 </section>
