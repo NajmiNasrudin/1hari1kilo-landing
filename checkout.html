@@ -87,22 +87,23 @@ html{scroll-padding-bottom:var(--panel-h,0px)}
 .pay-panel{position:fixed;left:0;right:0;bottom:0;z-index:40;background:#0B0B0C;color:var(--paper);border-top:2px solid var(--volt);box-shadow:0 -8px 24px rgba(0,0,0,.28);padding:14px max(16px,env(safe-area-inset-right)) calc(12px + env(safe-area-inset-bottom)) max(16px,env(safe-area-inset-left));transform:translateY(110%);visibility:hidden;transition:transform .2s ease,visibility .2s}
 .pay-panel.is-visible{transform:none;visibility:visible}
 .pay-panel-inner{max-width:640px;margin:0 auto;display:flex;flex-direction:column;gap:10px}
-.pp-summary{display:flex;align-items:baseline;justify-content:space-between;gap:12px}
-.pp-items{font-size:.9375rem;color:var(--mist);min-width:0}
-.pp-total{white-space:nowrap;font-size:.8125rem;color:var(--mist);text-transform:uppercase;letter-spacing:.06em}
+.pp-summary{display:flex;flex-direction:column;gap:4px}
+.pp-items{margin:0;padding:0;list-style:none;font-size:.875rem;line-height:1.35;color:var(--mist)}
+.pp-items li{display:flex;justify-content:space-between;gap:12px;padding:1px 0 1px 18px;position:relative}
+.pp-items li::before{content:"\2713";position:absolute;left:0;color:var(--volt);font-weight:700}
+.pp-items b{color:var(--paper);font-weight:600;white-space:nowrap}
+.pp-total{display:flex;justify-content:space-between;align-items:baseline;border-top:1px solid #2A2E33;padding-top:4px;white-space:nowrap;font-size:.8125rem;color:var(--mist);text-transform:uppercase;letter-spacing:.06em}
 .pp-total strong{font-family:'Archivo','Arial Black',Arial,sans-serif;font-weight:900;font-size:1.5rem;letter-spacing:0;color:var(--volt);margin-left:4px}
-.pp-quote{margin:0;font-size:.875rem;line-height:1.45;color:var(--paper);border-left:3px solid var(--volt);padding-left:10px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
-.pp-quote span{color:var(--mist)}
+.form-quote{margin:4px 0 22px;padding:12px 14px;background:#fff;border-left:4px solid var(--volt);border-radius:6px;font-size:.9375rem;line-height:1.5;color:var(--ink)}
+.form-quote span{display:block;margin-top:2px;font-size:.8125rem;color:#5A6570}
 .pay-panel .pay-button{min-height:52px;padding:12px;border-color:var(--volt)}
 .pp-trust,.pp-help{margin:0;text-align:center;font-size:.8125rem;line-height:1.4;color:#9AA3AB}
 .pp-help{margin-top:-6px}
 .pp-help a{color:var(--paper)}
-@media (max-width:419px){.pp-total-label{display:none}}
 /* Short phones: tighter, still under 30% */
 @media (max-height:740px){
   .pay-panel{padding-top:10px;padding-bottom:calc(8px + env(safe-area-inset-bottom))}
   .pay-panel-inner{gap:6px}
-  .pp-quote{line-height:1.35}
   .pay-panel .pay-button{min-height:44px;padding:9px}
   .pp-help{margin-top:-4px}
 }
@@ -172,6 +173,8 @@ noscript p{background:#FBE4E1;border:1px solid var(--otot-text);color:var(--otot
             <p class="field-error" id="phoneError" aria-live="polite"></p>
           </div>
 
+          <p class="form-quote">"Ikutkan BMI sy dah dpt pegi ujian saringan SPP tu! Tq coach!" <span>— Pembeli e-book</span></p>
+
           <div class="bump" id="bumpBox">
             <label class="bump-toggle" for="videoBump">
               <input type="checkbox" class="bump-check" id="videoBump" name="videoBump" checked aria-describedby="bumpPoints bumpNote">
@@ -209,10 +212,12 @@ noscript p{background:#FBE4E1;border:1px solid var(--otot-text);color:var(--otot
 <div class="pay-panel" id="payPanel" aria-label="Ringkasan pesanan dan bayaran">
   <div class="pay-panel-inner">
     <div class="pp-summary">
-      <span class="pp-items">E-book RM47<span id="bumpLineItem"> + Berapa Banyak Kena Makan RM60</span></span>
+      <ul class="pp-items">
+        <li><span>E-book Cheat Code 1 Hari 1KG</span> <b>RM47</b></li>
+        <li id="bumpLineItem"><span>E-book Berapa Banyak Kena Makan?</span> <b>RM60</b></li>
+      </ul>
       <span class="pp-total"><span class="pp-total-label">Jumlah</span> <strong id="totalAmount" aria-live="polite">RM107</strong></span>
     </div>
-    <p class="pp-quote">"Ikutkan BMI sy dah dpt pegi ujian saringan SPP tu! Tq coach!" <span>— Pembeli e-book</span></p>
     <button type="submit" form="checkoutForm" class="pay-button" id="payButton">
       <span class="spinner" aria-hidden="true"></span>
       <span id="payLabel">Bayar <span id="payAmount">RM107</span> Sekarang</span>
