@@ -262,10 +262,16 @@ noscript p{background:#FBE4E1;border:1px solid var(--otot-text);color:var(--otot
   updateTotals();
 
   // Sticky pay panel: revealed once the buyer scrolls or completes a field, then it stays.
-  // While a text field is focused (phone keyboard up) it steps aside so the field stays visible.
+  // It steps aside only while the phone keyboard is actually open. On iPhone a field often stays
+  // focused after autofill or "Done", so focus alone would hide the pay button for good.
   var revealed = false, typing = false;
+  function keyboardOpen(){
+    var vv = window.visualViewport;
+    if (!vv) return typing;
+    return typing && window.innerHeight - vv.height * vv.scale > 120;
+  }
   function syncPanel(){
-    var show = revealed && !typing;
+    var show = revealed && !keyboardOpen();
     payPanel.classList.toggle("is-visible", show);
     document.body.classList.toggle("has-pay-panel", revealed);
     document.documentElement.style.setProperty("--panel-h", payPanel.offsetHeight + "px");
@@ -275,6 +281,11 @@ noscript p{background:#FBE4E1;border:1px solid var(--otot-text);color:var(--otot
     if ((window.pageYOffset || document.documentElement.scrollTop) > 40) reveal();
   }, { passive: true });
   window.addEventListener("resize", syncPanel, { passive: true });
+  if (window.visualViewport) window.visualViewport.addEventListener("resize", function(){
+    if (typing && !keyboardOpen()) reveal();
+    syncPanel();
+  });
+  form.addEventListener("change", reveal);
   form.addEventListener("focusin", function(e){
     if (e.target.matches("input[type=text],input[type=email],input[type=tel]")) { typing = true; syncPanel(); }
   });
