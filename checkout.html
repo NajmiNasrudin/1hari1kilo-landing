@@ -71,6 +71,8 @@ input[aria-invalid=true]{border-color:var(--otot-text);border-width:2px;backgrou
 .bump-tag{display:inline-block;font-family:'IBM Plex Mono',monospace;font-size:.875rem;letter-spacing:.04em;text-transform:uppercase;background:var(--ink);color:var(--volt);padding:4px 10px;border-radius:20px;margin-bottom:8px}
 .bump-topic{display:block;font-family:'IBM Plex Mono',monospace;font-weight:600;font-size:.8125rem;letter-spacing:.03em;text-transform:uppercase;color:var(--slate);margin-bottom:4px}
 .bump-title{display:block;font-family:'Archivo','Arial Black',Arial,sans-serif;font-weight:900;text-transform:uppercase;font-size:1.05rem;line-height:1.15;margin-bottom:6px}
+.bump-product{display:flex;gap:12px;align-items:flex-start;margin-bottom:6px}
+.bump-image{width:72px;height:72px;flex-shrink:0;border-radius:6px;object-fit:cover;border:1px solid #e3ddcf;background:#fff}
 .bump-price{display:block;font-family:'IBM Plex Mono',monospace;font-weight:700;font-size:1rem}
 .bump-price s{font-weight:400;color:var(--slate);margin-right:6px}
 .bump-state{display:block;font-size:.9375rem;font-weight:600;margin-top:6px}
@@ -174,16 +176,22 @@ noscript p{background:#FBE4E1;border:1px solid var(--otot-text);color:var(--otot
             <label class="bump-toggle" for="videoBump">
               <input type="checkbox" class="bump-check" id="videoBump" name="videoBump" checked aria-describedby="bumpPoints bumpNote">
               <span>
-                <span class="bump-tag">&#9889; Tawaran Khas &middot; Jimat RM52</span>
-                <span class="bump-topic">Video Ebook: Camna Nak Bakar Lemak Kau!</span>
-                <span class="bump-title">Cheat Code 1 Hari 1KG baru SATU topik. Full course ada dalam Video Ebook ni.</span>
-                <span class="bump-price"><s aria-label="Harga biasa RM129">RM129</s> RM77 sahaja</span>
+                <span class="bump-tag">&#9889; Tawaran Khas &middot; Jimat RM19</span>
+                <span class="bump-product">
+                  <img class="bump-image" src="https://coachcem.com/produk/berapa-kena-makan/image" alt="E-book Berapa Banyak Kena Makan? Bina Pelan Pemakanan Sendiri" width="72" height="72" loading="lazy">
+                  <span>
+                    <span class="bump-topic">E-book: Berapa Banyak Kena Makan?</span>
+                    <span class="bump-title">Lepas capai target, kira sendiri berapa acik patut makan setiap hari.</span>
+                  </span>
+                </span>
+                <span class="bump-price"><s aria-label="Harga biasa RM79">RM79</s> RM60 sahaja</span>
                 <span class="bump-state" id="bumpState">&#10003; Ditambah ke pesanan</span>
               </span>
             </label>
             <ul id="bumpPoints">
               <li>Cheat Code 1 Hari 1KG ni shortcut untuk nampak hasil cepat. Tapi shortcut bukan lifestyle.</li>
-              <li>Nak hasil yang kekal? Video Ebook ni ajar keseluruhan course: cara bakar lemak yang acik boleh amalkan hari-hari.</li>
+              <li>E-book ni ajar acik kira kalori dan makro sendiri dalam 5 langkah (BMR, PAL, TDEE, matlamat, makro), sampai ke gram nasi, ayam dan minyak dalam pinggan.</li>
+              <li>PDF 29 halaman, dengan contoh pelan 1 hari 1,500 kcal dan lembaran kerja untuk isi angka sendiri.</li>
             </ul>
           </div>
           <p class="bump-note" id="bumpNote">Tak nak? Untick kotak ni — e-book RM47 kekal.</p>
@@ -201,13 +209,13 @@ noscript p{background:#FBE4E1;border:1px solid var(--otot-text);color:var(--otot
 <div class="pay-panel" id="payPanel" aria-label="Ringkasan pesanan dan bayaran">
   <div class="pay-panel-inner">
     <div class="pp-summary">
-      <span class="pp-items">E-book RM47<span id="bumpLineItem"> + Video RM77</span></span>
-      <span class="pp-total"><span class="pp-total-label">Jumlah</span> <strong id="totalAmount" aria-live="polite">RM124</strong></span>
+      <span class="pp-items">E-book RM47<span id="bumpLineItem"> + Berapa Banyak Kena Makan RM60</span></span>
+      <span class="pp-total"><span class="pp-total-label">Jumlah</span> <strong id="totalAmount" aria-live="polite">RM107</strong></span>
     </div>
     <p class="pp-quote">"Ikutkan BMI sy dah dpt pegi ujian saringan SPP tu! Tq coach!" <span>— Pembeli e-book</span></p>
     <button type="submit" form="checkoutForm" class="pay-button" id="payButton">
       <span class="spinner" aria-hidden="true"></span>
-      <span id="payLabel">Bayar <span id="payAmount">RM124</span> Sekarang</span>
+      <span id="payLabel">Bayar <span id="payAmount">RM107</span> Sekarang</span>
     </button>
     <p class="pp-trust">&#128274; Selamat melalui CHIP &middot; FPX &middot; DuitNow QR &middot; Kad</p>
     <p class="pp-help">Ada masalah? <a href="https://wa.me/60122541050">WhatsApp kami</a></p>
@@ -219,7 +227,7 @@ noscript p{background:#FBE4E1;border:1px solid var(--otot-text);color:var(--otot
   "use strict";
 
   var EBOOK_PRICE = 47;
-  var BUMP_PRICE = 77;
+  var BUMP_PRICE = 60;
   var WHATSAPP_URL = "https://wa.me/60122541050";
 
   var bumpCheckbox = document.getElementById("videoBump");
@@ -248,7 +256,7 @@ noscript p{background:#FBE4E1;border:1px solid var(--otot-text);color:var(--otot
     payAmount.textContent = "RM" + total;
   }
 
-  // The video add-on starts ticked, except when the buyer chose "e-book sahaja" on the landing page.
+  // The Berapa Banyak Kena Makan add-on starts ticked, except when the buyer chose "e-book sahaja" on the landing page.
   try { if (new URLSearchParams(location.search).get("pakej") === "ebook") bumpCheckbox.checked = false; } catch (err) {}
   bumpCheckbox.addEventListener("change", updateTotals);
   updateTotals();
@@ -370,7 +378,7 @@ noscript p{background:#FBE4E1;border:1px solid var(--otot-text);color:var(--otot
       if (typeof window.fbq !== "function") return;
       if (/(?:^|;\s*)coachcem_tracking_choice=denied/.test(document.cookie)) return;
       var contents = [{ id: "ebook-1hari1", quantity: 1, item_price: EBOOK_PRICE }];
-      if (bumpCheckbox.checked) contents.push({ id: "video-full-team-cc7", quantity: 1, item_price: BUMP_PRICE });
+      if (bumpCheckbox.checked) contents.push({ id: "berapa-kena-makan", quantity: 1, item_price: BUMP_PRICE });
       var rand = (window.crypto && window.crypto.getRandomValues)
         ? Array.prototype.map.call(window.crypto.getRandomValues(new Uint8Array(8)), function(n){ return ("0" + n.toString(16)).slice(-2); }).join("")
         : String(Math.random()).slice(2, 18);
