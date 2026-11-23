@@ -41,7 +41,7 @@ for f in $FILES; do scp -q "${SSH_OPTS[@]}" "$f" "coachcem:coachcem-mail-stage-$
 
 ssh "${SSH_OPTS[@]}" coachcem TS="$TS" bash -s <<'REMOTE'
 set -euo pipefail
-PHP=(/opt/alt/php84/usr/bin/php -d extension=dom.so -d extension=fileinfo.so -d extension=mbstring.so -d extension=pdo_sqlite.so -d extension=xmlwriter.so -d extension=phar.so)
+PHP=(/opt/alt/php84/usr/bin/php -d extension=dom.so -d extension=fileinfo.so -d extension=mbstring.so -d extension=pdo.so -d extension=pdo_sqlite.so -d extension=xmlwriter.so -d extension=phar.so)
 APP=$(readlink -f /home/zjoawlrttx/coachcem-store/current)
 STAGE=~/coachcem-mail-stage-$TS
 BACKUP=~/backups/coachcem-mail-$TS
@@ -83,7 +83,7 @@ if true; then
   echo "== 2/3 Emel ujian melalui Spacemail ke $TEST_TO"
   ssh "${SSH_OPTS[@]}" coachcem TEST_TO="$TEST_TO" bash -s <<'REMOTE'
 set -uo pipefail
-PHP=(/opt/alt/php84/usr/bin/php -d extension=dom.so -d extension=fileinfo.so -d extension=mbstring.so -d extension=pdo_sqlite.so -d extension=xmlwriter.so -d extension=phar.so)
+PHP=(/opt/alt/php84/usr/bin/php -d extension=dom.so -d extension=fileinfo.so -d extension=mbstring.so -d extension=pdo.so -d extension=pdo_sqlite.so -d extension=xmlwriter.so -d extension=phar.so)
 cd /home/zjoawlrttx/coachcem-store/current
 printf '{"to":"%s","name":"Ujian","subject":"Ujian Spacemail 1hari1","html":"<p>Ini emel ujian dari sistem 1hari1 melalui Spacemail. Kalau acik nampak emel ni, Spacemail jalan.</p>"}' "$TEST_TO" \
   | "${PHP[@]}" artisan mail:send-legacy --no-interaction \
